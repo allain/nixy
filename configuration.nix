@@ -27,6 +27,12 @@ in
 
   security.rtkit.enable = true;
 
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+    alsa.enable = true;
+  };
+
   services.dbus.enable = true;
   security.polkit.enable = true;
 
@@ -203,7 +209,7 @@ in
   # Auto-mount USB drives at /mnt/usb
   services.udisks2.enable = true;
   systemd.tmpfiles.rules = [
-    "d /mnt/usb 0755 root root -"
+    "d /mnt/usb 0755 ${identity.userName} users -"
   ];
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="block", ENV{ID_USB_DRIVER}=="usb-storage", ENV{DEVTYPE}=="partition", TAG+="systemd", ENV{SYSTEMD_WANTS}+="usb-automount@%k.service"
@@ -213,7 +219,8 @@ in
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = "${pkgs.util-linux}/bin/mount -o rw,sync /dev/%i /mnt/usb";
+      ExecStartPre = "${pkgs.util-linux}/bin/mount -o rw,sync /dev/%i /mnt/usb";
+      ExecStart = "${pkgs.coreutils}/bin/chown -R ${identity.userName}:users /mnt/usb";
       ExecStop = "${pkgs.util-linux}/bin/umount /mnt/usb";
     };
   };
