@@ -4,7 +4,7 @@ let
 in
 {
   imports = [
-    ./hardware-configuration.nix
+    /etc/nixos/hardware-configuration.nix
     ./machine-mach-w29.nix
   ];
 
