@@ -16,9 +16,15 @@ in
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelModules = [ "l2tp_ppp" "l2tp_netlink" "ppp_generic" ];
 
   networking.hostName = identity.hostName;
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    plugins = with pkgs; [
+      networkmanager-l2tp
+    ];
+  };
 
   time.timeZone = identity.timeZone;
   i18n.defaultLocale = "en_US.UTF-8";
@@ -87,6 +93,8 @@ in
     mattermost-desktop
     neovim
     networkmanagerapplet
+    strongswan
+    xl2tpd
     nodejs_22
     openssl
     openssl.dev
@@ -147,6 +155,7 @@ in
   services.udisks2.enable = true;
   systemd.tmpfiles.rules = [
     "d /mnt/usb 0755 ${identity.userName} users -"
+    "d /etc/ipsec.d 0755 root root -"
   ];
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="block", ENV{ID_USB_DRIVER}=="usb-storage", ENV{DEVTYPE}=="partition", TAG+="systemd", ENV{SYSTEMD_WANTS}+="usb-automount@%k.service"
@@ -161,6 +170,15 @@ in
       ExecStop = "${pkgs.util-linux}/bin/umount /mnt/usb";
     };
   };
+
+  services.strongswan.enable = true;
+
+  environment.etc."strongswan.conf".text = ''
+    charon {
+      integrity_test = no
+      load_modular = no
+    }
+  '';
 
   services.openssh.enable = false;
   zramSwap.enable = true;
