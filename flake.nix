@@ -9,11 +9,16 @@
       url = "github:NvChad/starter";
       flake = false;
     };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, zig-overlay, nvchad-starter, ... }:
+  outputs = { self, nixpkgs, zig-overlay, nvchad-starter, home-manager, ... }:
     let
       system = "x86_64-linux";
+      identity = import ./identity.nix;
     in
     {
       nixosConfigurations.mach-w29 = nixpkgs.lib.nixosSystem {
@@ -26,6 +31,12 @@
             nixpkgs.overlays = [ zig-overlay.overlays.default ];
           })
           ./configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.${identity.userName} = import ./home.nix { inherit nvchad-starter; };
+          }
         ];
       };
     };

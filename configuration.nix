@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, nvchad-starter, ... }:
+{ config, lib, pkgs, self, ... }:
 let
   identity = import ./identity.nix;
 in
@@ -78,7 +78,6 @@ in
     fd
     google-chrome
     foot
-    git
     glow
     jq
     lazygit
@@ -137,68 +136,6 @@ in
   };
 
   programs.bash.shellAliases = {};
-
-  system.activationScripts.installUserBootstrap.text = ''
-    install -d -m 0755 /etc/skel/.config/nixpkgs
-    install -d -m 0755 /etc/skel/.config/hypr
-    install -d -m 0755 /etc/skel/.config/waybar
-    install -d -m 0755 /etc/skel/.config/mako
-    install -d -m 0755 /etc/skel/.config/foot
-
-    cp -r ${nvchad-starter}/ /etc/skel/.config/nvim
-    cp ${./hyprland.conf} /etc/skel/.config/hypr/hyprland.conf
-    cp ${./waybar-config.jsonc} /etc/skel/.config/waybar/config.jsonc
-    cp ${./waybar-style.css} /etc/skel/.config/waybar/style.css
-    cp ${./mako.conf} /etc/skel/.config/mako/config
-    cp ${./foot.ini} /etc/skel/.config/foot/foot.ini
-
-    install -d -m 0755 /usr/local/bin
-    cat > /usr/local/bin/install-claude-code <<'EOF'
-    #!/usr/bin/env bash
-    set -euo pipefail
-    export PATH="$HOME/.local/bin:$PATH"
-    curl -fsSL https://claude.ai/install.sh | bash
-    EOF
-    chmod 0755 /usr/local/bin/install-claude-code
-
-    if id -u ${identity.userName} >/dev/null 2>&1; then
-      install -d -o ${identity.userName} -g users -m 0755 /home/${identity.userName}/.config/hypr
-      install -d -o ${identity.userName} -g users -m 0755 /home/${identity.userName}/.config/waybar
-      install -d -o ${identity.userName} -g users -m 0755 /home/${identity.userName}/.config/mako
-      install -d -o ${identity.userName} -g users -m 0755 /home/${identity.userName}/.config/foot
-
-      if [ ! -e /home/${identity.userName}/.config/hypr/hyprland.conf ]; then
-        cp ${./hyprland.conf} /home/${identity.userName}/.config/hypr/hyprland.conf
-        chown ${identity.userName}:users /home/${identity.userName}/.config/hypr/hyprland.conf
-      fi
-
-      if [ ! -e /home/${identity.userName}/.config/waybar/config.jsonc ]; then
-        cp ${./waybar-config.jsonc} /home/${identity.userName}/.config/waybar/config.jsonc
-        chown ${identity.userName}:users /home/${identity.userName}/.config/waybar/config.jsonc
-      fi
-
-      if [ ! -e /home/${identity.userName}/.config/waybar/style.css ]; then
-        cp ${./waybar-style.css} /home/${identity.userName}/.config/waybar/style.css
-        chown ${identity.userName}:users /home/${identity.userName}/.config/waybar/style.css
-      fi
-
-      if [ ! -e /home/${identity.userName}/.config/mako/config ]; then
-        cp ${./mako.conf} /home/${identity.userName}/.config/mako/config
-        chown ${identity.userName}:users /home/${identity.userName}/.config/mako/config
-      fi
-
-      if [ ! -e /home/${identity.userName}/.config/foot/foot.ini ]; then
-        cp ${./foot.ini} /home/${identity.userName}/.config/foot/foot.ini
-        chown ${identity.userName}:users /home/${identity.userName}/.config/foot/foot.ini
-      fi
-
-      if [ ! -e /home/${identity.userName}/.config/nvim/init.lua ]; then
-        install -d -o ${identity.userName} -g users -m 0755 /home/${identity.userName}/.config/nvim
-        cp -r ${nvchad-starter}/* /home/${identity.userName}/.config/nvim/
-        chown -R ${identity.userName}:users /home/${identity.userName}/.config/nvim
-      fi
-    fi
-  '';
 
   documentation.man.enable = true;
   documentation.doc.enable = false;
