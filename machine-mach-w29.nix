@@ -3,6 +3,8 @@
   # Keep machine-specific laptop choices here rather than in
   # hardware-configuration.nix so they can be versioned and copied safely.
 
+  networking.hostName = "mach-w29";
+
   boot.kernelParams = [
     "quiet"
     "loglevel=3"

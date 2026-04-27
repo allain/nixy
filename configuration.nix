@@ -5,7 +5,6 @@ in
 {
   imports = [
     /etc/nixos/hardware-configuration.nix
-    ./machine-mach-w29.nix
   ];
 
   system.stateVersion = "25.11";
@@ -18,7 +17,6 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = [ "l2tp_ppp" "l2tp_netlink" "ppp_generic" ];
 
-  networking.hostName = identity.hostName;
   networking.networkmanager = {
     enable = true;
     plugins = with pkgs; [

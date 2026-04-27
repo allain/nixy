@@ -19,9 +19,8 @@
     let
       system = "x86_64-linux";
       identity = import ./identity.nix;
-    in
-    {
-      nixosConfigurations.mach-w29 = nixpkgs.lib.nixosSystem {
+
+      mkHost = machineModule: nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
           inherit self nvchad-starter;
@@ -31,6 +30,7 @@
             nixpkgs.overlays = [ zig-overlay.overlays.default ];
           })
           ./configuration.nix
+          machineModule
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -39,5 +39,9 @@
           }
         ];
       };
+    in
+    {
+      nixosConfigurations.mach-w29 = mkHost ./machine-mach-w29.nix;
+      nixosConfigurations.nuc8i7hvk = mkHost ./machine-nuc8i7hvk.nix;
     };
 }
