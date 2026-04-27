@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  networking.hostName = "nuc8i7hvk";
+  networking.hostName = "nuc";
 
   boot.kernelParams = [
     "quiet"
@@ -11,8 +11,6 @@
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
-      # AMD Vega M GH
-      amdvlk
       # Intel HD Graphics 630
       intel-media-driver
       vpl-gpu-rt
