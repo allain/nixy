@@ -1,5 +1,5 @@
 {
-  description = "Minimal Hyprland-first NixOS installer payload for Huawei MACH-W29";
+  description = "Portable Hyprland-first NixOS payload (multi-host)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";

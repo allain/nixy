@@ -1,11 +1,18 @@
-# Nixy MACH-W29 Payload
+# Nixy USB Payload
 
-Portable NixOS + Hyprland configuration for the Huawei MACH-W29. Rebuild directly from this USB drive — no copying needed.
+Portable NixOS + Hyprland configuration for multiple machines. Rebuild directly from this USB drive — no copying needed.
+
+## Supported hosts
+
+| Host | Machine |
+|------|---------|
+| `mach-w29` | Huawei MACH-W29 |
+| `nuc8i7hvk` | Intel NUC8i7HVK |
 
 ## Usage
 
 ```bash
-sudo nixos-rebuild switch --flake /mnt/usb#mach-w29 --impure
+sudo nixos-rebuild switch --flake /mnt/usb#<host> --impure
 ```
 
 ## What it installs
@@ -26,7 +33,8 @@ sudo nixos-rebuild switch --flake /mnt/usb#mach-w29 --impure
 - `flake.nix` — flake inputs and NixOS module wiring
 - `configuration.nix` — system-level NixOS config
 - `home.nix` — user-level config via Home Manager (dotfiles, git)
-- `machine-mach-w29.nix` — Huawei-specific hardware settings
+- `machine-mach-w29.nix` — Huawei MACH-W29 hardware settings
+- `machine-nuc8i7hvk.nix` — Intel NUC8i7HVK hardware settings
 - `identity.nix` — user identity (name, timezone, hostname)
 - `hyprland.conf` — Hyprland config (managed by Home Manager)
 - `waybar-config.jsonc` — Waybar config (managed by Home Manager)
@@ -37,6 +45,6 @@ sudo nixos-rebuild switch --flake /mnt/usb#mach-w29 --impure
 ## Notes
 
 - `hardware-configuration.nix` is referenced from `/etc/nixos/` — it stays on the machine, not the USB.
-- Huawei-specific settings live in `machine-mach-w29.nix`.
+- Machine-specific settings live in `machine-*.nix` files.
 - Dotfiles in `~/.config` are read-only symlinks managed by Home Manager. Edit the source files on the USB and rebuild to apply changes.
 - After first boot, run `passwd` to set your password.
