@@ -1,31 +1,63 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 32,
+  "height": 38,
+  "margin-top": 6,
+  "margin-left": 10,
+  "margin-right": 10,
   "modules-left": ["hyprland/workspaces"],
   "modules-center": ["clock"],
   "modules-right": ["network", "pulseaudio", "battery", "tray"],
-  "clock": {
-    "format": "{:%a %Y-%m-%d %H:%M}"
-  },
-  "network": {
-    "format-wifi": "wifi {essid}",
-    "format-ethernet": "eth",
-    "format-disconnected": "offline",
-    "tooltip-format": "{ifname} via {gwaddr}"
-  },
-  "pulseaudio": {
-    "format": "{volume}% {icon}",
-    "format-muted": "mute",
+
+  "hyprland/workspaces": {
+    "format": "{icon}",
     "format-icons": {
-      "default": ["vol", "vol", "vol"]
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "active": "",
+      "default": ""
+    },
+    "persistent-workspaces": {
+      "*": 5
     }
   },
-  "battery": {
-    "format": "{capacity}% {icon}",
-    "format-icons": ["bat", "bat", "bat", "bat", "bat"]
+
+  "clock": {
+    "format": "  {:%a %b %d  %H:%M}",
+    "tooltip-format": "<tt>{calendar}</tt>"
   },
+
+  "network": {
+    "format-wifi": "  {essid}",
+    "format-ethernet": "  {ifname}",
+    "format-disconnected": "  offline",
+    "tooltip-format": "{ifname} via {gwaddr}"
+  },
+
+  "pulseaudio": {
+    "format": "{icon}  {volume}%",
+    "format-muted": "  muted",
+    "format-icons": {
+      "default": ["", "", ""]
+    },
+    "on-click": "pavucontrol"
+  },
+
+  "battery": {
+    "format": "{icon}  {capacity}%",
+    "format-charging": "  {capacity}%",
+    "format-icons": ["", "", "", "", ""],
+    "states": {
+      "warning": 20,
+      "critical": 10
+    }
+  },
+
   "tray": {
-    "spacing": 8
+    "spacing": 10,
+    "icon-size": 16
   }
 }

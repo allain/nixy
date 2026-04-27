@@ -1,5 +1,5 @@
 force_keyboard_focus = true
-theme = "default"
+theme = "catppuccin"
 as_window = false
 
 [search]

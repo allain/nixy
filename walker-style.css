@@ -1,0 +1,69 @@
+#window {
+  background: alpha(#1e1e2e, 0.92);
+  border-radius: 12px;
+  border: 1px solid alpha(#45475a, 0.6);
+}
+
+#box {
+  background: transparent;
+}
+
+#search {
+  background: transparent;
+}
+
+#input {
+  background: #313244;
+  color: #cdd6f4;
+  border-radius: 8px;
+  padding: 8px 12px;
+  border: 1px solid #45475a;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 14px;
+  caret-color: #89b4fa;
+}
+
+#input:focus {
+  border-color: #89b4fa;
+}
+
+#input placeholder {
+  color: #6c7086;
+}
+
+#list {
+  background: transparent;
+}
+
+#item {
+  color: #cdd6f4;
+  border-radius: 8px;
+  transition: all 200ms ease;
+}
+
+#item:selected {
+  background: alpha(#89b4fa, 0.08);
+  color: #cdd6f4;
+}
+
+#item:hover {
+  background: alpha(#45475a, 0.4);
+}
+
+#text {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 14px;
+}
+
+#sub {
+  color: #6c7086;
+  font-size: 12px;
+}
+
+#activationlabel {
+  color: #45475a;
+}
+
+#spinner {
+  color: #89b4fa;
+}

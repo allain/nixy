@@ -118,6 +118,7 @@ in
     nodePackages.vscode-langservers-extracted
     bitwarden-desktop
     bitwarden-cli
+    swww
     walker
     libqalculate
     zigpkgs."0.16.0"

@@ -1,0 +1,65 @@
+{
+  "ui": {
+    "anchors": {
+      "top": true
+    },
+    "window": {
+      "box": {
+        "orientation": "vertical",
+        "spacing": 0,
+        "width": 600,
+        "margins": {
+          "top": 0,
+          "bottom": 0,
+          "start": 0,
+          "end": 0
+        },
+        "search": {
+          "spacing": 8,
+          "margins": {
+            "top": 16,
+            "bottom": 8,
+            "start": 16,
+            "end": 16
+          },
+          "input": {
+            "h_expand": true,
+            "icons": true
+          },
+          "spinner": {}
+        },
+        "list": {
+          "margins": {
+            "top": 8,
+            "bottom": 0,
+            "start": 0,
+            "end": 0
+          },
+          "item": {
+            "spacing": 4,
+            "margins": {
+              "top": 0,
+              "bottom": 0,
+              "start": 0,
+              "end": 0
+            },
+            "padding": {
+              "top": 8,
+              "bottom": 8,
+              "start": 16,
+              "end": 16
+            },
+            "activation_label": {},
+            "icon": {
+              "theme": "Adwaita",
+              "size": 22
+            },
+            "text": {
+              "sub": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}
