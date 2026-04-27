@@ -20,10 +20,10 @@
       system = "x86_64-linux";
       identity = import ./identity.nix;
 
-      mkHost = { machineModule, monitorScale ? 2 }: nixpkgs.lib.nixosSystem {
+      mkHost = { machineModule, monitorScale ? 2, monitorPosition ? "auto" }: nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
-          inherit self nvchad-starter monitorScale;
+          inherit self nvchad-starter monitorScale monitorPosition;
         };
         modules = [
           ({ pkgs, ... }: {
@@ -35,13 +35,13 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.${identity.userName} = import ./home.nix { inherit nvchad-starter monitorScale; };
+            home-manager.users.${identity.userName} = import ./home.nix { inherit nvchad-starter monitorScale monitorPosition; };
           }
         ];
       };
     in
     {
       nixosConfigurations.mach-w29 = mkHost { machineModule = ./machine-mach-w29.nix; monitorScale = 2; };
-      nixosConfigurations.nuc = mkHost { machineModule = ./machine-nuc8i7hvk.nix; monitorScale = 1; };
+      nixosConfigurations.nuc = mkHost { machineModule = ./machine-nuc8i7hvk.nix; monitorScale = 1; monitorPosition = "auto-up"; };
     };
 }

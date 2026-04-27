@@ -1,4 +1,4 @@
-{ nvchad-starter, monitorScale }:
+{ nvchad-starter, monitorScale, monitorPosition }:
 { config, lib, pkgs, ... }:
 {
   home.stateVersion = "25.11";
@@ -11,7 +11,10 @@
     "$HOME/.npm-global/bin"
   ];
 
-  home.file.".npmrc".text = "prefix=${config.home.homeDirectory}/.npm-global\n";
+  home.file.".npmrc" = {
+    text = "prefix=${config.home.homeDirectory}/.npm-global\n";
+    force = true;
+  };
 
   home.activation.installOpenAICodex = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     export NPM_CONFIG_PREFIX="${config.home.homeDirectory}/.npm-global"
@@ -26,7 +29,7 @@
 
   programs.git = {
     enable = true;
-    extraConfig = {
+    settings = {
       init.defaultBranch = "main";
       pull.rebase = true;
     };
@@ -34,7 +37,7 @@
 
   xdg.configFile = {
     "hypr/hyprland.conf".source = ./hyprland.conf;
-    "hypr/monitors.conf".text = "monitor = ,preferred,auto,${toString monitorScale}";
+    "hypr/monitors.conf".text = "monitor = ,preferred,${monitorPosition},${toString monitorScale}\n";
     "waybar/config.jsonc".source = ./waybar-config.jsonc;
     "waybar/style.css".source = ./waybar-style.css;
     "mako/config".source = ./mako.conf;
