@@ -87,7 +87,10 @@ in
     google-chrome
     foot
     glow
+    just
     jq
+    helix
+    htop
     lazygit
     lazydocker
     libnotify
@@ -112,7 +115,11 @@ in
     wget
     wl-clipboard
     vscode
-    wofi
+    nodePackages.vscode-langservers-extracted
+    bitwarden-desktop
+    bitwarden-cli
+    walker
+    libqalculate
     zigpkgs."0.16.0"
   ];
 

@@ -8,8 +8,16 @@
   ];
 
   home.sessionPath = [
+    "$HOME/bin"
     "$HOME/.npm-global/bin"
   ];
+
+  programs.bash = {
+    enable = true;
+    initExtra = ''
+      . "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh"
+    '';
+  };
 
   home.file.".npmrc" = {
     text = "prefix=${config.home.homeDirectory}/.npm-global\n";
@@ -42,6 +50,15 @@
     "waybar/style.css".source = ./waybar-style.css;
     "mako/config".source = ./mako.conf;
     "foot/foot.ini".source = ./foot.ini;
+    "walker/config.toml".source = ./walker-config.toml;
+    "hypr/walker-bitwarden.sh" = {
+      source = ./walker-bitwarden.sh;
+      executable = true;
+    };
+    "hypr/retile.sh" = {
+      source = ./retile.sh;
+      executable = true;
+    };
     "nvim" = {
       source = nvchad-starter;
       recursive = true;

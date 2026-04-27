@@ -1,0 +1,100 @@
+force_keyboard_focus = true
+theme = "default"
+as_window = false
+
+[search]
+placeholder = "Search..."
+delay = 0
+
+[list]
+max_entries = 50
+show_initial_entries = true
+single_click = true
+placeholder = "No Results"
+
+[builtins.applications]
+weight = 5
+name = "applications"
+placeholder = "Applications"
+prioritize_new = true
+context_aware = true
+refresh = true
+show_icon_when_single = true
+show_generic = true
+history = true
+
+[builtins.applications.actions]
+enabled = true
+hide_without_query = true
+
+[builtins.calc]
+require_number = true
+weight = 5
+name = "calc"
+icon = "accessories-calculator"
+placeholder = "Calculator"
+min_chars = 1
+
+[builtins.websearch]
+weight = 1
+icon = "applications-internet"
+name = "websearch"
+placeholder = "Websearch"
+
+[[builtins.websearch.entries]]
+name = "Google"
+url = "https://www.google.com/search?q=%TERM%"
+
+[builtins.finder]
+weight = 5
+icon = "folder"
+name = "finder"
+placeholder = "Files"
+switcher_only = true
+ignore_gitignore = true
+refresh = true
+concurrency = 8
+show_icon_when_single = true
+
+[builtins.symbols]
+exec = "wl-copy '%RESULT%'"
+weight = 5
+name = "symbols"
+placeholder = "Symbols"
+switcher_only = true
+history = true
+typeahead = true
+
+[builtins.emojis]
+exec = "wl-copy"
+weight = 5
+icon = "face-smile"
+name = "emojis"
+placeholder = "Emojis"
+switcher_only = true
+history = true
+typeahead = true
+show_unqualified = false
+
+[builtins.clipboard]
+exec = "wl-copy"
+weight = 5
+icon = "user-bookmarks"
+name = "clipboard"
+placeholder = "Clipboard"
+image_height = 300
+max_entries = 10
+switcher_only = true
+
+[builtins.windows]
+weight = 5
+icon = "view-restore"
+name = "windows"
+placeholder = "Windows"
+show_icon_when_single = true
+
+[builtins.switcher]
+weight = 5
+name = "switcher"
+placeholder = "Switcher"
+prefix = "/"
