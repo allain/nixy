@@ -55,10 +55,6 @@
       source = ./walker-bitwarden.sh;
       executable = true;
     };
-    "hypr/retile.sh" = {
-      source = ./retile.sh;
-      executable = true;
-    };
     "nvim" = {
       source = nvchad-starter;
       recursive = true;
