@@ -107,6 +107,7 @@ in
     pavucontrol
     playerctl
     ripgrep
+    socat
     python3
     psmisc
     unzip

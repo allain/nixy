@@ -10,19 +10,8 @@
   "modules-right": ["network", "pulseaudio", "battery", "tray"],
 
   "hyprland/workspaces": {
-    "format": "{icon}",
-    "format-icons": {
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "active": "",
-      "default": ""
-    },
-    "persistent-workspaces": {
-      "*": 5
-    }
+    "format": "{id}",
+    "sort-by-number": true
   },
 
   "clock": {

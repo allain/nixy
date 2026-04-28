@@ -111,6 +111,10 @@ EOF
       source = ./bing-wallpaper.sh;
       executable = true;
     };
+    "hypr/workspace-manager.sh" = {
+      source = ./workspace-manager.sh;
+      executable = true;
+    };
     "nvim" = {
       source = nvchad-starter;
       recursive = true;
