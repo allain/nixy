@@ -24,6 +24,16 @@
     force = true;
   };
 
+  home.activation.seedMonitorsConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    MONITORS_CONF="${config.home.homeDirectory}/.config/hypr/monitors.conf"
+    if [ ! -f "$MONITORS_CONF" ]; then
+      $DRY_RUN_CMD mkdir -p "$(dirname "$MONITORS_CONF")"
+      $DRY_RUN_CMD cat > "$MONITORS_CONF" << 'EOF'
+${monitorsConfig}
+EOF
+    fi
+  '';
+
   home.activation.installOpenAICodex = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     export NPM_CONFIG_PREFIX="${config.home.homeDirectory}/.npm-global"
     export PATH="${pkgs.nodejs_22}/bin:$NPM_CONFIG_PREFIX/bin:$PATH"
@@ -86,7 +96,6 @@
 
   xdg.configFile = {
     "hypr/hyprland.conf".source = ./hyprland.conf;
-    "hypr/monitors.conf".text = monitorsConfig;
     "waybar/config.jsonc".source = ./waybar-config.jsonc;
     "waybar/style.css".source = ./waybar-style.css;
     "mako/config".source = ./mako.conf;

@@ -114,6 +114,7 @@ in
     waybar
     wget
     nwg-displays
+    xfce.thunar
     wl-clipboard
     vscode
     nodePackages.vscode-langservers-extracted
