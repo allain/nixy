@@ -113,6 +113,7 @@ in
     vim
     waybar
     wget
+    nwg-displays
     wl-clipboard
     vscode
     nodePackages.vscode-langservers-extracted

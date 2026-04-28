@@ -1,4 +1,4 @@
-{ nvchad-starter, monitorScale, monitorPosition }:
+{ nvchad-starter, monitorsConfig }:
 { config, lib, pkgs, ... }:
 {
   home.stateVersion = "25.11";
@@ -86,7 +86,7 @@
 
   xdg.configFile = {
     "hypr/hyprland.conf".source = ./hyprland.conf;
-    "hypr/monitors.conf".text = "monitor = ,preferred,${monitorPosition},${toString monitorScale}\n";
+    "hypr/monitors.conf".text = monitorsConfig;
     "waybar/config.jsonc".source = ./waybar-config.jsonc;
     "waybar/style.css".source = ./waybar-style.css;
     "mako/config".source = ./mako.conf;

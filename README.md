@@ -7,7 +7,7 @@ Portable NixOS + Hyprland configuration for multiple machines. Rebuild directly 
 | Host | Machine |
 |------|---------|
 | `mach-w29` | Huawei MACH-W29 |
-| `nuc8i7hvk` | Intel NUC8i7HVK |
+| `nuc` | Intel NUC8i7HVK |
 
 ## Usage
 
@@ -19,14 +19,14 @@ sudo nixos-rebuild switch --flake /mnt/usb#<host> --impure
 
 - NixOS `25.11` with Home Manager
 - Hyprland started through UWSM
-- `google-chrome`
-- `neovim` (NvChad)
-- `foot`
-- `wofi`
-- `waybar`
-- `mako`
-- `nodejs_22`
-- `claude-code`
+- `google-chrome`, `mattermost-desktop`, `bitwarden-desktop`
+- `neovim` (NvChad), `helix`, `vscode`
+- `foot` terminal
+- `walker` (app launcher)
+- `waybar`, `mako`, `swww` (wallpaper)
+- `claude-code`, `deno`, `nodejs_22`, `python3`, `zig`
+- `lazygit`, `lazydocker`
+- `nwg-displays` (monitor management)
 
 ## Contents
 
@@ -41,6 +41,12 @@ sudo nixos-rebuild switch --flake /mnt/usb#<host> --impure
 - `waybar-style.css` — Waybar styles (managed by Home Manager)
 - `mako.conf` — Mako notification config (managed by Home Manager)
 - `foot.ini` — Foot terminal config (managed by Home Manager)
+- `walker-config.toml` — Walker launcher config (managed by Home Manager)
+- `walker-style.css` — Walker theme CSS (managed by Home Manager)
+- `walker-theme.json` — Walker theme (managed by Home Manager)
+- `walker-bitwarden.sh` — Bitwarden integration script
+- `bing-wallpaper.sh` — Daily Bing wallpaper fetcher
+- `justfile` — Task runner commands
 
 ## Notes
 
