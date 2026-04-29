@@ -89,6 +89,7 @@ EOF
     Unit.Description = "Fetch Bing wallpaper daily";
     Timer = {
       OnCalendar = "*-*-* 08:00:00";
+      OnStartupSec = "30";
       Persistent = true;
     };
     Install.WantedBy = [ "timers.target" ];
