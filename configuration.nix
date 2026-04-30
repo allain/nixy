@@ -74,7 +74,7 @@ in
     BROWSER = "google-chrome-stable";
     NIXOS_OZONE_WL = "1";
     PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
-    C_INCLUDE_PATH = "${pkgs.openssl.dev}/include";
+    C_INCLUDE_PATH = "${pkgs.openssl.dev}/include:${pkgs.glibc.dev}/include";
     LIBRARY_PATH = "${pkgs.lib.getLib pkgs.openssl}/lib";
   };
 
@@ -203,6 +203,6 @@ in
     }
   '';
 
-  services.openssh.enable = false;
+  services.openssh.enable = true;
   zramSwap.enable = true;
 }
