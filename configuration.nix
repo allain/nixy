@@ -163,7 +163,9 @@ in
     initialPassword = identity.initialPassword;
   };
 
-  programs.bash.shellAliases = {};
+  programs.bash.shellAliases = {
+    code = "code --enable-features=UseOzonePlatform --ozone-platform=wayland --disable-gpu-compositing";
+  };
 
   documentation.man.enable = true;
   documentation.doc.enable = false;

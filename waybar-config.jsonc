@@ -5,7 +5,7 @@
   "margin-top": 6,
   "margin-left": 10,
   "margin-right": 10,
-  "modules-left": ["clock"],
+  "modules-center": ["clock"],
   "modules-right": ["network", "pulseaudio", "battery", "tray"],
 
   "clock": {
@@ -21,8 +21,8 @@
   },
 
   "pulseaudio": {
-    "format": "{icon}  {volume}%",
-    "format-muted": "  muted",
+    "format": "{volume}%",
+    "format-muted": "muted",
     "format-icons": {
       "default": ["", "", ""]
     },
@@ -40,7 +40,7 @@
   },
 
   "tray": {
-    "spacing": 10,
+    "spacing": 20,
     "icon-size": 16
   }
 }
