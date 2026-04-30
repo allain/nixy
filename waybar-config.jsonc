@@ -5,14 +5,8 @@
   "margin-top": 6,
   "margin-left": 10,
   "margin-right": 10,
-  "modules-left": ["hyprland/workspaces"],
-  "modules-center": ["clock"],
+  "modules-left": ["clock"],
   "modules-right": ["network", "pulseaudio", "battery", "tray"],
-
-  "hyprland/workspaces": {
-    "format": "{id}",
-    "sort-by-number": true
-  },
 
   "clock": {
     "format": "  {:%a %b %d  %H:%M}",

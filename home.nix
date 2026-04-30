@@ -104,10 +104,6 @@ EOF
       source = ./gradient-wallpaper.sh;
       executable = true;
     };
-    "hypr/workspace-manager.sh" = {
-      source = ./workspace-manager.sh;
-      executable = true;
-    };
     "hypr/open-terminal.sh" = {
       source = ./open-terminal.sh;
       executable = true;
