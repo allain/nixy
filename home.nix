@@ -66,33 +66,25 @@ EOF
 
   programs.git = {
     enable = true;
+    userName = "Allain Lalonde";
+    userEmail = "allain.lalonde@gmail.com";
     settings = {
       init.defaultBranch = "main";
       pull.rebase = true;
     };
   };
 
-  systemd.user.services.bing-wallpaper = {
-    Unit.Description = "Fetch and set Bing daily wallpaper";
+  systemd.user.services.gradient-wallpaper = {
+    Unit.Description = "Set gradient wallpaper";
     Service = {
       Type = "oneshot";
-      ExecStart = "%h/.config/hypr/bing-wallpaper.sh";
+      ExecStart = "%h/.config/hypr/gradient-wallpaper.sh";
       Environment = [
-        "PATH=${lib.makeBinPath (with pkgs; [ curl jq swww coreutils findutils ])}"
+        "PATH=${lib.makeBinPath (with pkgs; [ swww coreutils ])}"
         "WAYLAND_DISPLAY=wayland-1"
         "XDG_RUNTIME_DIR=/run/user/1000"
       ];
     };
-  };
-
-  systemd.user.timers.bing-wallpaper = {
-    Unit.Description = "Fetch Bing wallpaper daily";
-    Timer = {
-      OnCalendar = "*-*-* 08:00:00";
-      OnStartupSec = "30";
-      Persistent = true;
-    };
-    Install.WantedBy = [ "timers.target" ];
   };
 
   xdg.configFile = {
@@ -108,8 +100,9 @@ EOF
       source = ./walker-bitwarden.sh;
       executable = true;
     };
-    "hypr/bing-wallpaper.sh" = {
-      source = ./bing-wallpaper.sh;
+    "hypr/bg.jpg".source = ./bg.jpg;
+    "hypr/gradient-wallpaper.sh" = {
+      source = ./gradient-wallpaper.sh;
       executable = true;
     };
     "hypr/workspace-manager.sh" = {
