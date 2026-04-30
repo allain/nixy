@@ -100,7 +100,6 @@ EOF
       source = ./walker-bitwarden.sh;
       executable = true;
     };
-    "hypr/bg.jpg".source = ./bg.jpg;
     "hypr/gradient-wallpaper.sh" = {
       source = ./gradient-wallpaper.sh;
       executable = true;
