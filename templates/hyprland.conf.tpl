@@ -7,7 +7,7 @@ exec-once = mako
 exec-once = nm-applet --indicator
 exec-once = walker --gapplication-service
 exec-once = swww-daemon &
-exec-once = sleep 1 && ~/.config/hypr/gradient-wallpaper.sh
+exec-once = sleep 2 && ~/.config/nixy/wallpaper
 exec-once = hypridle
 exec-once = systemctl --user start hyprpolkitagent
 exec-once = wl-paste --watch cliphist store
@@ -16,8 +16,8 @@ general {
   gaps_in = 5
   gaps_out = 10
   border_size = 2
-  col.active_border = rgba(89b4faee) rgba(cba6f7ee) 45deg
-  col.inactive_border = rgba(45475aaa)
+  col.active_border = rgba(${blue}ee) rgba(${mauve}ee) 45deg
+  col.inactive_border = rgba(${surface1}aa)
   layout = dwindle
 }
 
@@ -34,7 +34,7 @@ decoration {
     enabled = true
     range = 20
     render_power = 3
-    color = rgba(1e1e2eee)
+    color = rgba(${base}ee)
   }
   active_opacity = 1.0
   inactive_opacity = 1.0
@@ -110,6 +110,7 @@ bind = $mod, up, layoutmsg, swapprev
 bind = $mod, down, layoutmsg, swapnext
 bind = ALT, Tab, cyclenext
 bind = ALT SHIFT, Tab, cyclenext, prev
+bind = $mod SHIFT, T, exec, theme-set --list | walker --dmenu | xargs -r theme-set
 
 bindm = $mod, mouse:272, movewindow
 bindm = $mod, mouse:273, resizewindow

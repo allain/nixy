@@ -86,6 +86,7 @@ in
     fd
     google-chrome
     foot
+    gettext
     glow
     just
     jq

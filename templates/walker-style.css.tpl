@@ -1,7 +1,7 @@
 #window {
-  background: alpha(#1e1e2e, 0.92);
+  background: alpha(#${base}, 0.92);
   border-radius: 12px;
-  border: 1px solid alpha(#45475a, 0.6);
+  border: 1px solid alpha(#${surface1}, 0.6);
 }
 
 #box {
@@ -13,22 +13,22 @@
 }
 
 #input {
-  background: #313244;
-  color: #cdd6f4;
+  background: #${surface0};
+  color: #${text};
   border-radius: 8px;
   padding: 8px 12px;
-  border: 1px solid #45475a;
+  border: 1px solid #${surface1};
   font-family: "JetBrainsMono Nerd Font";
   font-size: 14px;
-  caret-color: #89b4fa;
+  caret-color: #${blue};
 }
 
 #input:focus {
-  border-color: #89b4fa;
+  border-color: #${blue};
 }
 
 #input placeholder {
-  color: #6c7086;
+  color: #${overlay0};
 }
 
 #list {
@@ -36,18 +36,18 @@
 }
 
 #item {
-  color: #cdd6f4;
+  color: #${text};
   border-radius: 8px;
   transition: all 200ms ease;
 }
 
 #item:selected {
-  background: alpha(#89b4fa, 0.08);
-  color: #cdd6f4;
+  background: alpha(#${blue}, 0.08);
+  color: #${text};
 }
 
 #item:hover {
-  background: alpha(#45475a, 0.4);
+  background: alpha(#${surface1}, 0.4);
 }
 
 #text {
@@ -56,14 +56,14 @@
 }
 
 #sub {
-  color: #6c7086;
+  color: #${overlay0};
   font-size: 12px;
 }
 
 #activationlabel {
-  color: #45475a;
+  color: #${surface1};
 }
 
 #spinner {
-  color: #89b4fa;
+  color: #${blue};
 }

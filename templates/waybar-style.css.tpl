@@ -1,16 +1,16 @@
-@define-color base #1e1e2e;
-@define-color mantle #181825;
-@define-color crust #11111b;
-@define-color surface0 #313244;
-@define-color surface1 #45475a;
-@define-color text #cdd6f4;
-@define-color subtext #a6adc8;
-@define-color blue #89b4fa;
-@define-color mauve #cba6f7;
-@define-color green #a6e3a1;
-@define-color red #f38ba8;
-@define-color peach #fab387;
-@define-color yellow #f9e2af;
+@define-color base #${base};
+@define-color mantle #${mantle};
+@define-color crust #${crust};
+@define-color surface0 #${surface0};
+@define-color surface1 #${surface1};
+@define-color text #${text};
+@define-color subtext #${subtext};
+@define-color blue #${blue};
+@define-color mauve #${mauve};
+@define-color green #${green};
+@define-color red #${red};
+@define-color peach #${peach};
+@define-color yellow #${yellow};
 
 * {
   border: none;

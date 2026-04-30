@@ -10,6 +10,7 @@
   home.sessionPath = [
     "$HOME/bin"
     "$HOME/.npm-global/bin"
+    "$HOME/.config/nixy"
   ];
 
   programs.bash = {
@@ -74,45 +75,84 @@ EOF
     };
   };
 
-  systemd.user.services.gradient-wallpaper = {
-    Unit.Description = "Set gradient wallpaper";
+  systemd.user.services.wallpaper = {
+    Unit.Description = "Set random wallpaper";
     Service = {
       Type = "oneshot";
-      ExecStart = "%h/.config/hypr/gradient-wallpaper.sh";
+      ExecStart = "%h/.config/nixy/wallpaper";
       Environment = [
-        "PATH=${lib.makeBinPath (with pkgs; [ swww coreutils ])}"
+        "PATH=${lib.makeBinPath (with pkgs; [ swww coreutils curl gnugrep gnused ])}"
         "WAYLAND_DISPLAY=wayland-1"
         "XDG_RUNTIME_DIR=/run/user/1000"
       ];
     };
   };
 
+  systemd.user.timers.wallpaper = {
+    Unit.Description = "Change wallpaper daily";
+    Timer = {
+      OnCalendar = "daily";
+      OnStartupSec = "5s";
+      Persistent = true;
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
+
+  home.activation.bootstrapTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -f "${config.home.homeDirectory}/.config/nixy/current-theme" ]; then
+      $DRY_RUN_CMD bash "${config.home.homeDirectory}/.config/nixy/theme-set" catppuccin-mocha || true
+    fi
+  '';
+
   xdg.configFile = {
-    "hypr/hyprland.conf".source = ./hyprland.conf;
+    # Non-themed configs (no colors, deployed directly)
     "waybar/config.jsonc".source = ./waybar-config.jsonc;
-    "waybar/style.css".source = ./waybar-style.css;
-    "mako/config".source = ./mako.conf;
-    "foot/foot.ini".source = ./foot.ini;
     "walker/config.toml".source = ./walker-config.toml;
     "walker/themes/catppuccin.json".source = ./walker-theme.json;
-    "walker/themes/catppuccin.css".source = ./walker-style.css;
+    "hypr/hypridle.conf".source = ./hypridle.conf;
     "hypr/walker-bitwarden.sh" = {
       source = ./walker-bitwarden.sh;
-      executable = true;
-    };
-    "hypr/gradient-wallpaper.sh" = {
-      source = ./gradient-wallpaper.sh;
       executable = true;
     };
     "hypr/open-terminal.sh" = {
       source = ./open-terminal.sh;
       executable = true;
     };
-    "hypr/hyprlock.conf".source = ./hyprlock.conf;
-    "hypr/hypridle.conf".source = ./hypridle.conf;
     "nvim" = {
       source = nvchad-starter;
       recursive = true;
     };
+
+    # Theme switcher script
+    "nixy/theme-set" = {
+      source = ./theme-set.sh;
+      executable = true;
+    };
+
+    # Wallpaper picker script
+    "nixy/wallpaper" = {
+      source = ./wallpaper.sh;
+      executable = true;
+    };
+
+    # Templates
+    "nixy/templates/hyprland.conf.tpl".source = ./templates/hyprland.conf.tpl;
+    "nixy/templates/waybar-style.css.tpl".source = ./templates/waybar-style.css.tpl;
+    "nixy/templates/foot.ini.tpl".source = ./templates/foot.ini.tpl;
+    "nixy/templates/mako.conf.tpl".source = ./templates/mako.conf.tpl;
+    "nixy/templates/hyprlock.conf.tpl".source = ./templates/hyprlock.conf.tpl;
+    "nixy/templates/walker-style.css.tpl".source = ./templates/walker-style.css.tpl;
+
+    # Themes
+    "nixy/themes/catppuccin-mocha.sh".source = ./themes/catppuccin-mocha.sh;
+    "nixy/themes/tokyo-night.sh".source = ./themes/tokyo-night.sh;
+    "nixy/themes/nord.sh".source = ./themes/nord.sh;
+    "nixy/themes/gruvbox-dark.sh".source = ./themes/gruvbox-dark.sh;
+    "nixy/themes/rose-pine.sh".source = ./themes/rose-pine.sh;
+    "nixy/themes/dracula.sh".source = ./themes/dracula.sh;
+    "nixy/themes/one-dark.sh".source = ./themes/one-dark.sh;
+    "nixy/themes/solarized-dark.sh".source = ./themes/solarized-dark.sh;
+    "nixy/themes/everforest-dark.sh".source = ./themes/everforest-dark.sh;
+    "nixy/themes/kanagawa.sh".source = ./themes/kanagawa.sh;
   };
 }

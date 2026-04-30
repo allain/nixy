@@ -4,9 +4,9 @@ sort=-time
 layer=overlay
 
 font=JetBrainsMono Nerd Font 11
-background-color=#1e1e2eee
-text-color=#cdd6f4ff
-border-color=#89b4faff
+background-color=#${base}ee
+text-color=#${text}ff
+border-color=#${blue}ff
 border-size=2
 border-radius=10
 padding=14
@@ -15,5 +15,5 @@ default-timeout=4000
 icon-path=/usr/share/icons/hicolor
 
 [urgency=high]
-border-color=#f38ba8ff
+border-color=#${red}ff
 default-timeout=8000
