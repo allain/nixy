@@ -109,6 +109,8 @@ EOF
       source = ./workspace-manager.sh;
       executable = true;
     };
+    "hypr/hyprlock.conf".source = ./hyprlock.conf;
+    "hypr/hypridle.conf".source = ./hypridle.conf;
     "nvim" = {
       source = nvchad-starter;
       recursive = true;

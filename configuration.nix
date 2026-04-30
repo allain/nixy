@@ -125,6 +125,11 @@ in
     slurp
     swww
     walker
+    hyprlock
+    hypridle
+    hyprpolkitagent
+    cliphist
+    hyprsunset
     libqalculate
     zigpkgs."0.16.0"
   ];
