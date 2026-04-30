@@ -5,4 +5,4 @@
 swww query &>/dev/null || swww-daemon &
 sleep 0.5
 
-swww clear 1e1e2e
+swww clear 181825
