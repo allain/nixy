@@ -121,6 +121,8 @@ in
     nodePackages.vscode-langservers-extracted
     bitwarden-desktop
     bitwarden-cli
+    grim
+    slurp
     swww
     walker
     libqalculate
