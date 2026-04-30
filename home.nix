@@ -109,6 +109,10 @@ EOF
       source = ./workspace-manager.sh;
       executable = true;
     };
+    "hypr/open-terminal.sh" = {
+      source = ./open-terminal.sh;
+      executable = true;
+    };
     "hypr/hyprlock.conf".source = ./hyprlock.conf;
     "hypr/hypridle.conf".source = ./hypridle.conf;
     "nvim" = {
