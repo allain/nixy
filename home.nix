@@ -98,10 +98,15 @@ EOF
     Install.WantedBy = [ "timers.target" ];
   };
 
-  home.activation.bootstrapTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    if [ ! -f "${config.home.homeDirectory}/.config/nixy/current-theme" ]; then
-      $DRY_RUN_CMD bash "${config.home.homeDirectory}/.config/nixy/theme-set" catppuccin-mocha || true
+  home.activation.renderTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    CURRENT_THEME_FILE="${config.home.homeDirectory}/.config/nixy/current-theme"
+    THEME="catppuccin-mocha"
+
+    if [ -f "$CURRENT_THEME_FILE" ]; then
+      THEME="$(cat "$CURRENT_THEME_FILE")"
     fi
+
+    $DRY_RUN_CMD bash "${config.home.homeDirectory}/.config/nixy/theme-set" "$THEME" || true
   '';
 
   xdg.configFile = {
