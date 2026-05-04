@@ -68,19 +68,19 @@
           monitor = , preferred, auto, 1
         '';
         workspacesConfig = ''
-          # External monitor: stable left-side workspaces
-          workspace = 1, monitor:desc:Samsung Electric Company LF22T35, default:true, persistent:true, defaultName:term
-          workspace = 2, monitor:desc:Samsung Electric Company LF22T35, persistent:true, defaultName:web
-          workspace = 3, monitor:desc:Samsung Electric Company LF22T35, persistent:true, defaultName:chat
-          workspace = 4, monitor:desc:Samsung Electric Company LF22T35, persistent:true
-          workspace = 5, monitor:desc:Samsung Electric Company LF22T35, persistent:true
+          # Built-in laptop display: stable workspaces
+          workspace = 1, monitor:eDP-1, default:true, persistent:true
+          workspace = 2, monitor:eDP-1, persistent:true
+          workspace = 3, monitor:eDP-1, persistent:true
+          workspace = 4, monitor:eDP-1, persistent:true
+          workspace = 5, monitor:eDP-1, persistent:true
 
-          # Laptop panel: stable right-side workspaces
-          workspace = 6, monitor:eDP-1, default:true, persistent:true, defaultName:notes
-          workspace = 7, monitor:eDP-1, persistent:true
-          workspace = 8, monitor:eDP-1, persistent:true
-          workspace = 9, monitor:eDP-1, persistent:true
-          workspace = 10, monitor:eDP-1, persistent:true
+          # Samsung LF22T35 external: stable workspaces
+          workspace = 6, monitor:desc:Samsung Electric Company LF22T35, default:true, persistent:true
+          workspace = 7, monitor:desc:Samsung Electric Company LF22T35, persistent:true
+          workspace = 8, monitor:desc:Samsung Electric Company LF22T35, persistent:true
+          workspace = 9, monitor:desc:Samsung Electric Company LF22T35, persistent:true
+          workspace = 10, monitor:desc:Samsung Electric Company LF22T35, persistent:true
         '';
       };
       nixosConfigurations.nuc = mkHost {

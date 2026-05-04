@@ -38,6 +38,45 @@ window#waybar > box {
   font-weight: 600;
 }
 
+#workspaces {
+  margin-left: 6px;
+  padding: 0 4px;
+}
+
+#workspaces button {
+  min-width: 28px;
+  padding: 4px 8px;
+  margin: 4px 1px;
+  border-radius: 8px;
+  color: @subtext;
+  background: transparent;
+}
+
+#workspaces button:hover {
+  color: @text;
+  background: alpha(@surface0, 0.75);
+}
+
+#workspaces button:not(.empty):not(.active) {
+  color: @text;
+  background: alpha(@surface1, 0.65);
+}
+
+#workspaces button.empty {
+  color: @subtext;
+  background: transparent;
+}
+
+#workspaces button.active {
+  color: @base;
+  background: @blue;
+}
+
+#workspaces button.urgent {
+  color: @base;
+  background: @red;
+}
+
 #network {
   color: @mauve;
 }
