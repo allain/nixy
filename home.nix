@@ -1,4 +1,4 @@
-{ nvchad-starter, monitorsConfig }:
+{ nvchad-starter, monitorsConfig, workspacesConfig }:
 { config, lib, pkgs, ... }:
 {
   home.stateVersion = "25.11";
@@ -129,6 +129,10 @@ EOF
     "walker/config.toml".source = ./walker-config.toml;
     "walker/themes/catppuccin.json".source = ./walker-theme.json;
     "hypr/hypridle.conf".source = ./hypridle.conf;
+    "hypr/workspaces.conf" = {
+      text = workspacesConfig;
+      force = true;
+    };
     "hypr/walker-bitwarden.sh" = {
       source = ./walker-bitwarden.sh;
       executable = true;

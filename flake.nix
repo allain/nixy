@@ -20,10 +20,26 @@
       system = "x86_64-linux";
       identity = import ./identity.nix;
 
-      mkHost = { machineModule, monitorsConfig ? "monitor = ,preferred,auto,2\n" }: nixpkgs.lib.nixosSystem {
+      mkHost =
+        { machineModule
+        , monitorsConfig ? "monitor = ,preferred,auto,2\n"
+        , workspacesConfig ? ''
+            workspace = 1, default:true, persistent:true
+            workspace = 2, persistent:true
+            workspace = 3, persistent:true
+            workspace = 4, persistent:true
+            workspace = 5, persistent:true
+            workspace = 6, persistent:true
+            workspace = 7, persistent:true
+            workspace = 8, persistent:true
+            workspace = 9, persistent:true
+            workspace = 10, persistent:true
+          ''
+        }:
+        nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
-          inherit self nvchad-starter monitorsConfig;
+          inherit self nvchad-starter monitorsConfig workspacesConfig;
         };
         modules = [
           ({ pkgs, ... }: {
@@ -35,7 +51,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.${identity.userName} = import ./home.nix { inherit nvchad-starter monitorsConfig; };
+            home-manager.users.${identity.userName} = import ./home.nix { inherit nvchad-starter monitorsConfig workspacesConfig; };
           }
         ];
       };
@@ -50,6 +66,21 @@
           monitor = eDP-1, 3000x2000@60, 1920x0, 2
           # Fallback for any other monitors
           monitor = , preferred, auto, 1
+        '';
+        workspacesConfig = ''
+          # External monitor: stable left-side workspaces
+          workspace = 1, monitor:desc:Samsung Electric Company LF22T35, default:true, persistent:true, defaultName:term
+          workspace = 2, monitor:desc:Samsung Electric Company LF22T35, persistent:true, defaultName:web
+          workspace = 3, monitor:desc:Samsung Electric Company LF22T35, persistent:true, defaultName:chat
+          workspace = 4, monitor:desc:Samsung Electric Company LF22T35, persistent:true
+          workspace = 5, monitor:desc:Samsung Electric Company LF22T35, persistent:true
+
+          # Laptop panel: stable right-side workspaces
+          workspace = 6, monitor:eDP-1, default:true, persistent:true, defaultName:notes
+          workspace = 7, monitor:eDP-1, persistent:true
+          workspace = 8, monitor:eDP-1, persistent:true
+          workspace = 9, monitor:eDP-1, persistent:true
+          workspace = 10, monitor:eDP-1, persistent:true
         '';
       };
       nixosConfigurations.nuc = mkHost {
