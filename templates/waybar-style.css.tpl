@@ -50,6 +50,10 @@ window#waybar > box {
   color: @surface1;
 }
 
+#backlight {
+  color: @yellow;
+}
+
 #battery {
   color: @green;
 }
@@ -70,6 +74,7 @@ window#waybar > box {
 #clock,
 #network,
 #pulseaudio,
+#backlight,
 #battery,
 #tray {
   padding: 4px 12px;

@@ -6,7 +6,7 @@
   "margin-left": 10,
   "margin-right": 10,
   "modules-center": ["clock"],
-  "modules-right": ["network", "pulseaudio", "battery", "tray"],
+  "modules-right": ["network", "pulseaudio", "backlight", "battery", "tray"],
 
   "clock": {
     "format": "  {:%a %b %d  %H:%M}",
@@ -27,6 +27,14 @@
       "default": ["", "", ""]
     },
     "on-click": "pavucontrol"
+  },
+
+  "backlight": {
+    "format": "{percent}%",
+    "tooltip-format": "Brightness {percent}%",
+    "on-click": "~/.config/nixy/brightness-menu",
+    "on-scroll-up": "brightnessctl set +5%",
+    "on-scroll-down": "brightnessctl set 5%-"
   },
 
   "battery": {

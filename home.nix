@@ -4,6 +4,7 @@
   home.stateVersion = "25.11";
 
   home.packages = with pkgs; [
+    bibata-cursors
     nodejs_22
   ];
 
@@ -12,6 +13,19 @@
     "$HOME/.npm-global/bin"
     "$HOME/.config/nixy"
   ];
+
+  home.sessionVariables = {
+    XCURSOR_THEME = "Bibata-Modern-Classic";
+    XCURSOR_SIZE = "40";
+  };
+
+  home.pointerCursor = {
+    name = "Bibata-Modern-Classic";
+    package = pkgs.bibata-cursors;
+    size = 40;
+    gtk.enable = true;
+    x11.enable = true;
+  };
 
   programs.bash = {
     enable = true;
@@ -123,6 +137,14 @@ EOF
       source = ./open-terminal.sh;
       executable = true;
     };
+    "hypr/cursor-zoom-toggle.sh" = {
+      source = ./cursor-zoom-toggle.sh;
+      executable = true;
+    };
+    "uwsm/env".text = ''
+      export XCURSOR_THEME=Bibata-Modern-Classic
+      export XCURSOR_SIZE=40
+    '';
     "nvim" = {
       source = nvchad-starter;
       recursive = true;
@@ -131,6 +153,11 @@ EOF
     # Theme switcher script
     "nixy/theme-set" = {
       source = ./theme-set.sh;
+      executable = true;
+    };
+
+    "nixy/brightness-menu" = {
+      source = ./brightness-menu.sh;
       executable = true;
     };
 
@@ -150,14 +177,19 @@ EOF
 
     # Themes
     "nixy/themes/catppuccin-mocha.sh".source = ./themes/catppuccin-mocha.sh;
+    "nixy/themes/catppuccin-latte.sh".source = ./themes/catppuccin-latte.sh;
     "nixy/themes/tokyo-night.sh".source = ./themes/tokyo-night.sh;
     "nixy/themes/nord.sh".source = ./themes/nord.sh;
     "nixy/themes/gruvbox-dark.sh".source = ./themes/gruvbox-dark.sh;
+    "nixy/themes/gruvbox-light.sh".source = ./themes/gruvbox-light.sh;
     "nixy/themes/rose-pine.sh".source = ./themes/rose-pine.sh;
+    "nixy/themes/rose-pine-dawn.sh".source = ./themes/rose-pine-dawn.sh;
     "nixy/themes/dracula.sh".source = ./themes/dracula.sh;
     "nixy/themes/one-dark.sh".source = ./themes/one-dark.sh;
     "nixy/themes/solarized-dark.sh".source = ./themes/solarized-dark.sh;
+    "nixy/themes/solarized-light.sh".source = ./themes/solarized-light.sh;
     "nixy/themes/everforest-dark.sh".source = ./themes/everforest-dark.sh;
+    "nixy/themes/everforest-light.sh".source = ./themes/everforest-light.sh;
     "nixy/themes/kanagawa.sh".source = ./themes/kanagawa.sh;
   };
 }

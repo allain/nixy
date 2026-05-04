@@ -1,6 +1,7 @@
 $mod = SUPER
 source = ~/.config/hypr/monitors.conf
-env = XCURSOR_SIZE,24
+env = XCURSOR_THEME,Bibata-Modern-Classic
+env = XCURSOR_SIZE,40
 exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 exec-once = waybar
 exec-once = mako
@@ -52,6 +53,12 @@ input {
   }
 }
 
+cursor {
+  enable_hyprcursor = false
+  zoom_factor = 1.0
+  zoom_rigid = true
+}
+
 animations {
   enabled = true
 
@@ -62,7 +69,9 @@ animations {
   animation = windows, 1, 6, overshot, slide
   animation = windowsOut, 1, 6, ease, slide
   animation = fade, 1, 6, smooth
-  animation = border, 1, 10, default
+  animation = fadeSwitch, 0
+  animation = fadeDim, 0
+  animation = border, 0
   animation = borderangle, 0
 }
 
@@ -95,6 +104,8 @@ bind = $mod, E, exec, thunar
 bind = $mod, Escape, exec, pidof hyprlock || hyprlock
 bind = $mod, C, exec, cliphist list | walker --dmenu | cliphist decode | wl-copy
 bind = $mod, N, exec, pkill hyprsunset || hyprsunset -t 4000
+bind = $mod, Z, exec, ~/.config/hypr/cursor-zoom-toggle.sh
+bind = $mod SHIFT, B, exec, ~/.config/nixy/brightness-menu
 bind = $mod, Q, killactive
 bind = $mod SHIFT, E, exit
 bind = $mod, F, fullscreen, 1

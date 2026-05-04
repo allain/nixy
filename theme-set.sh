@@ -50,6 +50,8 @@ fi
 # shellcheck disable=SC1090
 source "$THEME_FILE"
 
+theme_variant="${theme_variant:-dark}"
+
 # Export all color variables for envsubst
 export base mantle crust surface0 surface1 surface2 overlay0
 export text subtext subtext2
@@ -69,6 +71,19 @@ envsubst "$VARS" < "$TEMPLATES_DIR/hyprlock.conf.tpl"          > "$HOME/.config/
 envsubst "$VARS" < "$TEMPLATES_DIR/walker-style.css.tpl"       > "$HOME/.config/walker/themes/catppuccin.css"
 # Save current theme name
 echo "$THEME" > "$CURRENT_THEME_FILE"
+
+if command -v gsettings &>/dev/null; then
+  gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Classic 2>/dev/null || true
+  gsettings set org.gnome.desktop.interface cursor-size 40 2>/dev/null || true
+
+  if [ "$theme_variant" = "light" ]; then
+    gsettings set org.gnome.desktop.interface color-scheme default 2>/dev/null || true
+    gsettings set org.gnome.desktop.interface gtk-theme Adwaita 2>/dev/null || true
+  else
+    gsettings set org.gnome.desktop.interface color-scheme prefer-dark 2>/dev/null || true
+    gsettings set org.gnome.desktop.interface gtk-theme Adwaita-dark 2>/dev/null || true
+  fi
+fi
 
 # Reload services (skip if not running, e.g. during bootstrap)
 if command -v hyprctl &>/dev/null && hyprctl monitors &>/dev/null 2>&1; then
