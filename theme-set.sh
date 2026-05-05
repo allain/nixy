@@ -15,6 +15,55 @@ list_themes() {
   done
 }
 
+start_detached() {
+  local log_file="$1"
+  shift
+
+  mkdir -p "$(dirname "$log_file")"
+  nohup "$@" >"$log_file" 2>&1 &
+  disown
+}
+
+stop_process() {
+  local pattern="$1"
+  local name="$2"
+
+  pkill -TERM -f "$pattern" 2>/dev/null || true
+
+  for _ in {1..30}; do
+    if ! pgrep -f "$pattern" >/dev/null 2>&1; then
+      return
+    fi
+    sleep 0.1
+  done
+
+  pkill -KILL -f "$pattern" 2>/dev/null || true
+
+  for _ in {1..10}; do
+    if ! pgrep -f "$pattern" >/dev/null 2>&1; then
+      return
+    fi
+    sleep 0.1
+  done
+
+  echo "warning: could not stop $name cleanly" >&2
+}
+
+reload_session=1
+reload_hyprland=0
+
+while [ "${1:-}" = "--no-reload" ] || [ "${1:-}" = "--reload-hyprland" ]; do
+  case "$1" in
+    --no-reload)
+      reload_session=0
+      ;;
+    --reload-hyprland)
+      reload_hyprland=1
+      ;;
+  esac
+  shift
+done
+
 if [ "${1:-}" = "--list" ]; then
   list_themes
   exit 0
@@ -27,6 +76,8 @@ fi
 
 if [ -z "${1:-}" ]; then
   echo "Usage: theme-set <theme-name>"
+  echo "       theme-set --no-reload <theme-name>"
+  echo "       theme-set --reload-hyprland <theme-name>"
   echo "       theme-set --list"
   echo "       theme-set --current"
   echo ""
@@ -86,11 +137,15 @@ if command -v gsettings &>/dev/null; then
 fi
 
 # Reload services (skip if not running, e.g. during bootstrap)
-if command -v hyprctl &>/dev/null && hyprctl monitors &>/dev/null 2>&1; then
-  hyprctl reload
-  pkill waybar 2>/dev/null; waybar &disown
+if [ "$reload_session" -eq 1 ] && command -v hyprctl &>/dev/null && hyprctl monitors &>/dev/null 2>&1; then
+  if [ "$reload_hyprland" -eq 1 ]; then
+    hyprctl reload >/dev/null
+  fi
+  stop_process '(^|/)(waybar|\.waybar-wrapped)( |$)' "waybar"
+  start_detached "$HOME/.cache/nixy/waybar.log" waybar
   makoctl reload 2>/dev/null
   "$NIXY_DIR/wallpaper" 2>/dev/null
-  pkill walker 2>/dev/null; walker --gapplication-service &disown
+  stop_process '(^|/)(walker|\.walker-wrapped)( |$)' "walker"
+  start_detached "$HOME/.cache/nixy/walker.log" walker --gapplication-service
   notify-send "Theme" "Switched to ${theme_name:-$THEME}"
 fi

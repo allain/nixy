@@ -85,6 +85,7 @@ dwindle {
 }
 
 misc {
+  disable_autoreload = true
   disable_hyprland_logo = true
   animate_manual_resizes = true
   vfr = true

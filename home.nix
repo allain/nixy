@@ -120,7 +120,7 @@ EOF
       THEME="$(cat "$CURRENT_THEME_FILE")"
     fi
 
-    $DRY_RUN_CMD bash "${config.home.homeDirectory}/.config/nixy/theme-set" "$THEME" || true
+    $DRY_RUN_CMD bash "${config.home.homeDirectory}/.config/nixy/theme-set" --no-reload "$THEME" || true
   '';
 
   xdg.configFile = {
