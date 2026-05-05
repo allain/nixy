@@ -125,7 +125,7 @@ echo "$THEME" > "$CURRENT_THEME_FILE"
 
 if command -v gsettings &>/dev/null; then
   gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Classic 2>/dev/null || true
-  gsettings set org.gnome.desktop.interface cursor-size 24 2>/dev/null || true
+  gsettings set org.gnome.desktop.interface cursor-size 27 2>/dev/null || true
 
   if [ "$theme_variant" = "light" ]; then
     gsettings set org.gnome.desktop.interface color-scheme default 2>/dev/null || true
