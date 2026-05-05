@@ -80,6 +80,7 @@ in
 
   environment.systemPackages = with pkgs; [
     brightnessctl
+    bubblewrap
     curl
     claude-code-bin
     deno
