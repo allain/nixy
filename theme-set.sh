@@ -5,6 +5,8 @@ NIXY_DIR="$HOME/.config/nixy"
 THEMES_DIR="$NIXY_DIR/themes"
 TEMPLATES_DIR="$NIXY_DIR/templates"
 CURRENT_THEME_FILE="$NIXY_DIR/current-theme"
+CURSOR_THEME="Bibata-Modern-Classic"
+CURSOR_SIZE="27"
 
 # Explicit variable list for envsubst (avoids expanding $mod, $TIME, ${url}, etc.)
 VARS='${base}${mantle}${crust}${surface0}${surface1}${surface2}${overlay0}${text}${subtext}${subtext2}${blue}${mauve}${green}${red}${peach}${yellow}${teal}${ansi_black}${ansi_red}${ansi_green}${ansi_yellow}${ansi_blue}${ansi_magenta}${ansi_cyan}${ansi_white}${ansi_brblack}${ansi_brred}${ansi_brgreen}${ansi_bryellow}${ansi_brblue}${ansi_brmagenta}${ansi_brcyan}${ansi_brwhite}'
@@ -124,8 +126,8 @@ envsubst "$VARS" < "$TEMPLATES_DIR/walker-style.css.tpl"       > "$HOME/.config/
 echo "$THEME" > "$CURRENT_THEME_FILE"
 
 if command -v gsettings &>/dev/null; then
-  gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Classic 2>/dev/null || true
-  gsettings set org.gnome.desktop.interface cursor-size 27 2>/dev/null || true
+  gsettings set org.gnome.desktop.interface cursor-theme "$CURSOR_THEME" 2>/dev/null || true
+  gsettings set org.gnome.desktop.interface cursor-size "$CURSOR_SIZE" 2>/dev/null || true
 
   if [ "$theme_variant" = "light" ]; then
     gsettings set org.gnome.desktop.interface color-scheme default 2>/dev/null || true
@@ -134,6 +136,10 @@ if command -v gsettings &>/dev/null; then
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark 2>/dev/null || true
     gsettings set org.gnome.desktop.interface gtk-theme Adwaita-dark 2>/dev/null || true
   fi
+fi
+
+if command -v hyprctl &>/dev/null && hyprctl monitors &>/dev/null 2>&1; then
+  hyprctl setcursor "$CURSOR_THEME" "$CURSOR_SIZE" >/dev/null 2>&1 || true
 fi
 
 # Reload services (skip if not running, e.g. during bootstrap)

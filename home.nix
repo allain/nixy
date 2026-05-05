@@ -39,6 +39,15 @@
     force = true;
   };
 
+  home.file.".vscode/argv.json" = {
+    text = builtins.toJSON {
+      disable-hardware-acceleration = true;
+      enable-crash-reporter = false;
+      password-store = "basic";
+    };
+    force = true;
+  };
+
   home.activation.seedMonitorsConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     MONITORS_CONF="${config.home.homeDirectory}/.config/hypr/monitors.conf"
     if [ ! -f "$MONITORS_CONF" ]; then
@@ -81,9 +90,11 @@ EOF
 
   programs.git = {
     enable = true;
-    userName = "Allain Lalonde";
-    userEmail = "allain.lalonde@gmail.com";
     settings = {
+      user = {
+        name = "Allain Lalonde";
+        email = "allain.lalonde@gmail.com";
+      };
       init.defaultBranch = "main";
       pull.rebase = true;
     };
