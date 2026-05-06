@@ -6,7 +6,7 @@ THEMES_DIR="$NIXY_DIR/themes"
 TEMPLATES_DIR="$NIXY_DIR/templates"
 CURRENT_THEME_FILE="$NIXY_DIR/current-theme"
 CURSOR_THEME="Bibata-Modern-Classic"
-CURSOR_SIZE="27"
+CURSOR_SIZE="20"
 
 # Explicit variable list for envsubst (avoids expanding $mod, $TIME, ${url}, etc.)
 VARS='${base}${mantle}${crust}${surface0}${surface1}${surface2}${overlay0}${text}${subtext}${subtext2}${blue}${mauve}${green}${red}${peach}${yellow}${teal}${ansi_black}${ansi_red}${ansi_green}${ansi_yellow}${ansi_blue}${ansi_magenta}${ansi_cyan}${ansi_white}${ansi_brblack}${ansi_brred}${ansi_brgreen}${ansi_bryellow}${ansi_brblue}${ansi_brmagenta}${ansi_brcyan}${ansi_brwhite}'

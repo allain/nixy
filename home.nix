@@ -16,13 +16,13 @@
 
   home.sessionVariables = {
     XCURSOR_THEME = "Bibata-Modern-Classic";
-    XCURSOR_SIZE = "27";
+    XCURSOR_SIZE = "20";
   };
 
   home.pointerCursor = {
     name = "Bibata-Modern-Classic";
     package = pkgs.bibata-cursors;
-    size = 27;
+    size = 20;
     gtk.enable = true;
     x11.enable = true;
   };
@@ -158,7 +158,7 @@ EOF
     };
     "uwsm/env".text = ''
       export XCURSOR_THEME=Bibata-Modern-Classic
-      export XCURSOR_SIZE=27
+      export XCURSOR_SIZE=20
     '';
     "nvim" = {
       source = nvchad-starter;
