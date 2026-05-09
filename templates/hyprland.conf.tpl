@@ -144,6 +144,7 @@ bind = $mod, up, layoutmsg, swapprev
 bind = $mod, down, layoutmsg, swapnext
 bind = ALT, Tab, cyclenext
 bind = ALT SHIFT, Tab, cyclenext, prev
+bind = $mod SHIFT, S, exec, ~/.config/nixy/wallpaper
 bind = $mod SHIFT, T, exec, theme-set --list | walker --dmenu | xargs -r theme-set
 
 bindm = $mod, mouse:272, movewindow
