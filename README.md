@@ -1,56 +1,49 @@
-# Nixy USB Payload
+# Network Recovery After Rebuild
 
-Portable NixOS + Hyprland configuration for multiple machines. Rebuild directly from this USB drive — no copying needed.
-
-## Supported hosts
-
-| Host | Machine |
-|------|---------|
-| `mach-w29` | Huawei MACH-W29 |
-| `nuc` | Intel NUC8i7HVK |
-
-## Usage
+## Quick Fix — Start NetworkManager
 
 ```bash
-sudo nixos-rebuild switch --flake /mnt/usb#<host> --impure
+sudo systemctl start NetworkManager
+sudo systemctl status NetworkManager
 ```
 
-## What it installs
+## If That Fails — Check Logs
 
-- NixOS `25.11` with Home Manager
-- Hyprland started through UWSM
-- `google-chrome`, `mattermost-desktop`, `bitwarden-desktop`
-- `neovim` (NvChad), `helix`, `vscode`
-- `foot` terminal
-- `walker` (app launcher)
-- `waybar`, `mako`, `swww` (wallpaper)
-- `claude-code`, `deno`, `nodejs_22`, `python3`, `zig`
-- `lazygit`, `lazydocker`
-- `nwg-displays` (monitor management)
+```bash
+journalctl -u NetworkManager -b --no-pager | tail -50
+```
 
-## Contents
+## Manual Network (No NetworkManager)
 
-- `flake.nix` — flake inputs and NixOS module wiring
-- `configuration.nix` — system-level NixOS config
-- `home.nix` — user-level config via Home Manager (dotfiles, git)
-- `machine-mach-w29.nix` — Huawei MACH-W29 hardware settings
-- `machine-nuc8i7hvk.nix` — Intel NUC8i7HVK hardware settings
-- `identity.nix` — user identity (name, timezone, hostname)
-- `hyprland.conf` — Hyprland config (managed by Home Manager)
-- `waybar-config.jsonc` — Waybar config (managed by Home Manager)
-- `waybar-style.css` — Waybar styles (managed by Home Manager)
-- `mako.conf` — Mako notification config (managed by Home Manager)
-- `foot.ini` — Foot terminal config (managed by Home Manager)
-- `walker-config.toml` — Walker launcher config (managed by Home Manager)
-- `walker-style.css` — Walker theme CSS (managed by Home Manager)
-- `walker-theme.json` — Walker theme (managed by Home Manager)
-- `walker-bitwarden.sh` — Bitwarden integration script
-- `bing-wallpaper.sh` — Daily Bing wallpaper fetcher
-- `justfile` — Task runner commands
+### Wired
+```bash
+# Find your interface name
+ip link
 
-## Notes
+# Bring it up
+sudo ip link set enp0s31f6 up
+sudo dhcpcd enp0s31f6
+```
 
-- `hardware-configuration.nix` is referenced from `/etc/nixos/` — it stays on the machine, not the USB.
-- Machine-specific settings live in `machine-*.nix` files.
-- Dotfiles in `~/.config` are read-only symlinks managed by Home Manager. Edit the source files on the USB and rebuild to apply changes.
-- After first boot, run `passwd` to set your password.
+### WiFi
+```bash
+sudo ip link set wlp0s20f3 up
+sudo wpa_supplicant -B -i wlp0s20f3 -c /etc/wpa_supplicant.conf
+sudo dhcpcd wlp0s20f3
+```
+
+## Likely Root Cause
+
+`system.stateVersion` in `configuration.nix` is set to `"25.11"`. This should be set to whatever NixOS version you **originally installed** (probably `"25.05"` or `"24.11"`). It is NOT meant to track your nixpkgs channel.
+
+### Fix
+1. Edit `configuration.nix`
+2. Change `system.stateVersion = "25.11";` to your original install version
+3. Rebuild: `sudo nixos-rebuild switch --flake .`
+
+## Once Network Is Back
+
+```bash
+cd ~/personal/nixy
+claude
+```

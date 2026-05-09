@@ -2,7 +2,9 @@
   description = "Portable Hyprland-first NixOS payload (multi-host)";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # Pin for waybar < 0.15 (0.15.0 invisible on Hyprland — Waybar #4864).
+    nixpkgs-waybar.url = "github:NixOS/nixpkgs/nixos-25.05";
     zig-overlay.url = "github:mitchellh/zig-overlay";
     zig-overlay.inputs.nixpkgs.follows = "nixpkgs";
     nvchad-starter = {
@@ -10,15 +12,16 @@
       flake = false;
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, zig-overlay, nvchad-starter, home-manager, ... }:
+  outputs = { self, nixpkgs, nixpkgs-waybar, zig-overlay, nvchad-starter, home-manager, ... }:
     let
       system = "x86_64-linux";
       identity = import ./identity.nix;
+      pkgsWaybar = import nixpkgs-waybar { inherit system; config.allowUnfree = true; };
 
       mkHost =
         { machineModule
@@ -43,7 +46,10 @@
         };
         modules = [
           ({ pkgs, ... }: {
-            nixpkgs.overlays = [ zig-overlay.overlays.default ];
+            nixpkgs.overlays = [
+              zig-overlay.overlays.default
+              (final: prev: { waybar = pkgsWaybar.waybar; })
+            ];
           })
           ./configuration.nix
           machineModule

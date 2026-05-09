@@ -9,7 +9,7 @@ launch=google-chrome-stable ${url}
 [key-bindings]
 show-urls-launch=Control+Shift+o
 
-[colors]
+[colors-dark]
 alpha=0.92
 foreground=${text}
 background=${base}

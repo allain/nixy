@@ -3,6 +3,7 @@ let
   identity = import ./identity.nix;
 in
 {
+
   imports = [
     /etc/nixos/hardware-configuration.nix
   ];
@@ -121,7 +122,7 @@ in
     xfce.thunar
     wl-clipboard
     vscode
-    nodePackages.vscode-langservers-extracted
+    vscode-langservers-extracted
     bitwarden-desktop
     bitwarden-cli
     grim
