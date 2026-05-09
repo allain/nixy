@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Set solid color wallpaper with swww
+# Set solid color wallpaper with awww
 
-# Ensure swww daemon is running
-swww query &>/dev/null || swww-daemon &
+# Ensure awww daemon is running
+awww query &>/dev/null || awww-daemon &
 sleep 0.5
 
-swww clear ${mantle}
+awww clear ${mantle}

@@ -36,7 +36,7 @@ echo "Downloading: $FILE"
 curl -sfL "https://raw.githubusercontent.com/$REPO/$BRANCH/$FILE" -o "$WALLPAPER"
 
 echo "Setting wallpaper..."
-swww img "$WALLPAPER" \
+awww img "$WALLPAPER" \
   --transition-type grow \
   --transition-duration 2 \
   --transition-fps 60

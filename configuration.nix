@@ -84,7 +84,7 @@ in
     brightnessctl
     bubblewrap
     curl
-    claude-code-bin
+    claude-code
     deno
     fd
     google-chrome
@@ -119,7 +119,7 @@ in
     waybar
     wget
     nwg-displays
-    xfce.thunar
+    thunar
     wl-clipboard
     vscode
     vscode-langservers-extracted
@@ -127,7 +127,7 @@ in
     bitwarden-cli
     grim
     slurp
-    swww
+    awww
     walker
     hyprlock
     hypridle
@@ -206,8 +206,8 @@ in
   services.openssh.enable = true;
   zramSwap.enable = true;
 
-  services.logind = {
-    lidSwitch = "hibernate";
-    lidSwitchExternalPower = "hibernate";
+  services.logind.settings.Login = {
+    HandleLidSwitch = "hibernate";
+    HandleLidSwitchExternalPower = "hibernate";
   };
 }
