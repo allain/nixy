@@ -16,6 +16,7 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = [ "l2tp_ppp" "l2tp_netlink" "ppp_generic" ];
+  boot.resumeDevice = "/dev/disk/by-uuid/84204633-b192-41d8-ac99-a6091d5736c2";
 
   networking.networkmanager = {
     enable = true;
@@ -203,4 +204,9 @@ in
 
   services.openssh.enable = true;
   zramSwap.enable = true;
+
+  services.logind = {
+    lidSwitch = "hibernate";
+    lidSwitchExternalPower = "hibernate";
+  };
 }
