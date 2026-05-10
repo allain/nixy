@@ -107,7 +107,7 @@ EOF
       Type = "oneshot";
       ExecStart = "%h/.config/nixy/wallpaper";
       Environment = [
-        "PATH=${lib.makeBinPath (with pkgs; [ awww coreutils curl gnugrep gnused ])}"
+        "PATH=${lib.makeBinPath (with pkgs; [ bash awww coreutils curl findutils gnugrep gnused ])}"
         "WAYLAND_DISPLAY=wayland-1"
         "XDG_RUNTIME_DIR=/run/user/1000"
       ];

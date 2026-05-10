@@ -179,6 +179,10 @@ in
   systemd.tmpfiles.rules = [
     "d /mnt/usb 0755 ${identity.userName} users -"
     "d /etc/ipsec.d 0755 root root -"
+    # Use 'shutdown' hibernate mode instead of platform/ACPI S4.
+    # Huawei Matebook firmware is unreliable with platform S4; shutdown mode
+    # just writes the image and powers off, then resumes on next boot.
+    "w /sys/power/disk - - - - shutdown"
   ];
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="block", ENV{ID_USB_DRIVER}=="usb-storage", ENV{DEVTYPE}=="partition", TAG+="systemd", ENV{SYSTEMD_WANTS}+="usb-automount@%k.service"
@@ -204,7 +208,38 @@ in
   '';
 
   services.openssh.enable = true;
-  zramSwap.enable = true;
+
+  # zram is useful but its default priority (5) is above the disk swap (-2).
+  # That leaves compressed pages in RAM that the kernel must reclaim before
+  # writing the hibernation image, which can stall hibernate. Lower zram
+  # below disk swap so disk swap is consumed first.
+  zramSwap = {
+    enable = true;
+    priority = -10;
+  };
+
+  # Belt-and-suspenders: swapoff zram before hibernate, swapon after resume.
+  # Avoids any chance of zram interfering with the hibernation snapshot.
+  systemd.services.zram-hibernate-fix = {
+    description = "Disable zram around hibernate";
+    wantedBy = [
+      "systemd-hibernate.service"
+      "systemd-suspend-then-hibernate.service"
+      "systemd-hybrid-sleep.service"
+    ];
+    before = [
+      "systemd-hibernate.service"
+      "systemd-suspend-then-hibernate.service"
+      "systemd-hybrid-sleep.service"
+    ];
+    unitConfig.StopWhenUnneeded = true;
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.util-linux}/bin/swapoff /dev/zram0";
+      ExecStop = "${pkgs.util-linux}/bin/swapon --priority -10 /dev/zram0";
+    };
+  };
 
   services.logind.settings.Login = {
     HandleLidSwitch = "hibernate";
