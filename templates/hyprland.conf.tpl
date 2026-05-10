@@ -81,7 +81,6 @@ dwindle {
   pseudotile = true
   smart_split = false
   preserve_split = true
-  single_window_aspect_ratio = 16 9
 }
 
 misc {
@@ -159,23 +158,29 @@ bindel = ,XF86MonBrightnessUp, exec, brightnessctl set +10%
 bindel = ,XF86MonBrightnessDown, exec, brightnessctl set 10%-
 bindl = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
-windowrulev2 = noborder, fullscreen:1
+windowrule = match:fullscreen 1, border_size 0
 
-windowrulev2 = float,class:^(nm-connection-editor)$
-windowrulev2 = float,class:^(pavucontrol)$
-windowrulev2 = float,class:^(blueman-manager)$
-windowrulev2 = float,title:^(Open File)(.*)$
-windowrulev2 = float,title:^(Save File)(.*)$
-windowrulev2 = float,title:^(Save As)(.*)$
-windowrulev2 = float,title:^(Confirm)(.*)$
-windowrulev2 = float,title:^(File Upload)(.*)$
-windowrulev2 = float,title:^(Picture-in-Picture)$
-windowrulev2 = pin,title:^(Picture-in-Picture)$
-windowrulev2 = size 480 270,title:^(Picture-in-Picture)$
-windowrulev2 = move 100%-490 100%-280,title:^(Picture-in-Picture)$
-windowrulev2 = float,class:^(Bitwarden)$
-windowrulev2 = size 400 600,class:^(Bitwarden)$
-windowrulev2 = float,class:^(thunar)$,title:^(File Operation Progress)$
+windowrule = match:class ^(nm-connection-editor)$, float on
+windowrule = match:class ^(pavucontrol)$, float on
+windowrule = match:class ^(blueman-manager)$, float on
+windowrule = match:title ^(Open File)(.*)$, float on
+windowrule = match:title ^(Save File)(.*)$, float on
+windowrule = match:title ^(Save As)(.*)$, float on
+windowrule = match:title ^(Confirm)(.*)$, float on
+windowrule = match:title ^(File Upload)(.*)$, float on
+windowrule = match:title ^(Picture-in-Picture)$, float on
+windowrule = match:title ^(Picture-in-Picture)$, pin on
+windowrule = match:title ^(Picture-in-Picture)$, size 480 270
+windowrule = match:title ^(Picture-in-Picture)$, move 100%-490 100%-280
+windowrule = match:class ^(Bitwarden)$, float on
+windowrule = match:class ^(Bitwarden)$, size 400 600
+
+windowrule {
+  name = thunar-progress
+  match:class = ^(thunar)$
+  match:title = ^(File Operation Progress)$
+  float = on
+}
 
 # Resize submap
 bind = $mod, R, submap, resize
