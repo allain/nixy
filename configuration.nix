@@ -43,6 +43,15 @@ in
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
+  # NixOS services.blueman drop-in adds a second ExecStart= on top of the
+  # upstream blueman user unit, which systemd refuses for non-oneshot
+  # services ("Service has more than one ExecStart= setting"). Reset the
+  # list (empty string) and re-add a single canonical ExecStart.
+  systemd.user.services.blueman-applet.serviceConfig.ExecStart = lib.mkForce [
+    ""
+    "${pkgs.blueman}/bin/blueman-applet"
+  ];
+
   services.dbus.enable = true;
   security.polkit.enable = true;
 
@@ -211,12 +220,22 @@ in
 
   # zram is useful but its default priority (5) is above the disk swap (-2).
   # That leaves compressed pages in RAM that the kernel must reclaim before
-  # writing the hibernation image, which can stall hibernate. Lower zram
-  # below disk swap so disk swap is consumed first.
+  # writing the hibernation image, which can stall hibernate. Force disk swap
+  # to a higher priority than zram so disk swap is consumed first.
+  # NOTE: zram-generator rejects negative priorities ("Swap priority -10 out
+  # of range"), so we keep zram at a low positive value and bump the disk
+  # swap above it instead.
   zramSwap = {
     enable = true;
-    priority = -10;
+    priority = 5;
   };
+
+  swapDevices = lib.mkForce [
+    {
+      device = "/dev/disk/by-uuid/84204633-b192-41d8-ac99-a6091d5736c2";
+      priority = 100;
+    }
+  ];
 
   # Belt-and-suspenders: swapoff zram before hibernate, swapon after resume.
   # Avoids any chance of zram interfering with the hibernation snapshot.
