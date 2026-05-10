@@ -177,6 +177,11 @@ EOF
       executable = true;
     };
 
+    "nixy/power-menu" = {
+      source = ./power-menu.sh;
+      executable = true;
+    };
+
     # Wallpaper picker script
     "nixy/wallpaper" = {
       source = ./wallpaper.sh;

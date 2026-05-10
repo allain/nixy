@@ -107,8 +107,8 @@ bind = $mod, C, exec, cliphist list | walker --dmenu | cliphist decode | wl-copy
 bind = $mod, N, exec, pkill hyprsunset || hyprsunset -t 4000
 bind = $mod, Z, exec, ~/.config/hypr/cursor-zoom-toggle.sh
 bind = $mod SHIFT, B, exec, ~/.config/nixy/brightness-menu
+bind = $mod SHIFT, E, exec, ~/.config/nixy/power-menu
 bind = $mod, Q, killactive
-bind = $mod SHIFT, E, exit
 bind = $mod, F, fullscreen, 1
 bind = $mod SHIFT, F, fullscreen, 0
 bind = $mod, V, exec, code --enable-features=UseOzonePlatform --ozone-platform=wayland --disable-gpu-compositing
