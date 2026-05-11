@@ -124,6 +124,25 @@ EOF
     Install.WantedBy = [ "timers.target" ];
   };
 
+  # Walker launcher daemon. Managed by systemd so it auto-restarts if it
+  # crashes (previously relied on `exec-once` which only fires once per
+  # Hyprland session — if walker died mid-session, Super+Space stopped
+  # working until logout).
+  systemd.user.services.walker = {
+    Unit = {
+      Description = "Walker application launcher (GApplication service)";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.walker}/bin/walker --gapplication-service";
+      Restart = "on-failure";
+      RestartSec = 2;
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+
   home.activation.renderTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     export PATH="${lib.makeBinPath (with pkgs; [ bash coreutils gettext gnused gnugrep ])}:$PATH"
 

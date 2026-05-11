@@ -151,7 +151,18 @@ if [ "$reload_session" -eq 1 ] && command -v hyprctl &>/dev/null && hyprctl moni
   start_detached "$HOME/.cache/nixy/waybar.log" waybar
   makoctl reload 2>/dev/null
   "$NIXY_DIR/wallpaper" 2>/dev/null
-  stop_process '(^|/)(walker|\.walker-wrapped)( |$)' "walker"
-  start_detached "$HOME/.cache/nixy/walker.log" walker --gapplication-service
+  # Prefer systemd-managed walker (auto-restart). Fall back to detached
+  # start when the unit isn't active yet (e.g. first rebuild on a fresh
+  # generation, or running theme-set outside a graphical session).
+  if systemctl --user is-active --quiet walker.service 2>/dev/null; then
+    systemctl --user restart walker.service
+  else
+    stop_process '(^|/)(walker|\.walker-wrapped)( |$)' "walker"
+    if systemctl --user list-unit-files walker.service &>/dev/null; then
+      systemctl --user start walker.service
+    else
+      start_detached "$HOME/.cache/nixy/walker.log" walker --gapplication-service
+    fi
+  fi
   notify-send "Theme" "Switched to ${theme_name:-$THEME}"
 fi
