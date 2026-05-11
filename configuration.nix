@@ -17,7 +17,7 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = [ "l2tp_ppp" "l2tp_netlink" "ppp_generic" ];
-  boot.resumeDevice = "/dev/disk/by-uuid/84204633-b192-41d8-ac99-a6091d5736c2";
+
 
   networking.networkmanager = {
     enable = true;
@@ -188,10 +188,6 @@ in
   systemd.tmpfiles.rules = [
     "d /mnt/usb 0755 ${identity.userName} users -"
     "d /etc/ipsec.d 0755 root root -"
-    # Use 'shutdown' hibernate mode instead of platform/ACPI S4.
-    # Huawei Matebook firmware is unreliable with platform S4; shutdown mode
-    # just writes the image and powers off, then resumes on next boot.
-    "w /sys/power/disk - - - - shutdown"
   ];
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="block", ENV{ID_USB_DRIVER}=="usb-storage", ENV{DEVTYPE}=="partition", TAG+="systemd", ENV{SYSTEMD_WANTS}+="usb-automount@%k.service"
@@ -218,50 +214,6 @@ in
 
   services.openssh.enable = true;
 
-  # zram is useful but its default priority (5) is above the disk swap (-2).
-  # That leaves compressed pages in RAM that the kernel must reclaim before
-  # writing the hibernation image, which can stall hibernate. Force disk swap
-  # to a higher priority than zram so disk swap is consumed first.
-  # NOTE: zram-generator rejects negative priorities ("Swap priority -10 out
-  # of range"), so we keep zram at a low positive value and bump the disk
-  # swap above it instead.
-  zramSwap = {
-    enable = true;
-    priority = 5;
-  };
+  zramSwap.enable = true;
 
-  swapDevices = lib.mkForce [
-    {
-      device = "/dev/disk/by-uuid/84204633-b192-41d8-ac99-a6091d5736c2";
-      priority = 100;
-    }
-  ];
-
-  # Belt-and-suspenders: swapoff zram before hibernate, swapon after resume.
-  # Avoids any chance of zram interfering with the hibernation snapshot.
-  systemd.services.zram-hibernate-fix = {
-    description = "Disable zram around hibernate";
-    wantedBy = [
-      "systemd-hibernate.service"
-      "systemd-suspend-then-hibernate.service"
-      "systemd-hybrid-sleep.service"
-    ];
-    before = [
-      "systemd-hibernate.service"
-      "systemd-suspend-then-hibernate.service"
-      "systemd-hybrid-sleep.service"
-    ];
-    unitConfig.StopWhenUnneeded = true;
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${pkgs.util-linux}/bin/swapoff /dev/zram0";
-      ExecStop = "${pkgs.util-linux}/bin/swapon --priority -10 /dev/zram0";
-    };
-  };
-
-  services.logind.settings.Login = {
-    HandleLidSwitch = "hibernate";
-    HandleLidSwitchExternalPower = "hibernate";
-  };
 }
