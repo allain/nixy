@@ -125,6 +125,8 @@ EOF
   };
 
   home.activation.renderTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    export PATH="${lib.makeBinPath (with pkgs; [ bash coreutils gettext gnused gnugrep ])}:$PATH"
+
     CURRENT_THEME_FILE="${config.home.homeDirectory}/.config/nixy/current-theme"
     THEME="catppuccin-mocha"
 
@@ -132,7 +134,9 @@ EOF
       THEME="$(cat "$CURRENT_THEME_FILE")"
     fi
 
-    $DRY_RUN_CMD bash "${config.home.homeDirectory}/.config/nixy/theme-set" --no-reload "$THEME" || true
+    # No `|| true`: render failures must abort activation so stale configs
+    # (e.g. old windowrulev2 syntax) never linger across rebuilds.
+    $DRY_RUN_CMD bash "${config.home.homeDirectory}/.config/nixy/theme-set" --no-reload "$THEME"
   '';
 
   xdg.configFile = {
