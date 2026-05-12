@@ -117,6 +117,7 @@ in
     openssl
     openssl.dev
     pkg-config
+    vivaldi
     pavucontrol
     playerctl
     ripgrep
