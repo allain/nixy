@@ -106,6 +106,7 @@ bind = $mod, Escape, exec, pidof hyprlock || hyprlock
 bind = $mod, C, exec, cliphist list | walker --dmenu | cliphist decode | wl-copy
 bind = $mod, N, exec, pkill hyprsunset || hyprsunset -t 4000
 bind = $mod, Z, exec, ~/.config/hypr/cursor-zoom-toggle.sh
+bind = $mod, Period, exec, systemctl --user start --no-block whisper-dictation
 bind = $mod SHIFT, B, exec, ~/.config/nixy/brightness-menu
 bind = $mod SHIFT, E, exec, ~/.config/nixy/power-menu
 bind = $mod, Q, killactive

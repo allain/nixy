@@ -19,9 +19,13 @@
       url = "github:kernalix7/winpodx";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    whisper-dictation = {
+      url = "github:jacopone/whisper-dictation";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-waybar, zig-overlay, nvchad-starter, home-manager, winpodx, ... }:
+  outputs = { self, nixpkgs, nixpkgs-waybar, zig-overlay, nvchad-starter, home-manager, winpodx, whisper-dictation, ... }:
     let
       system = "x86_64-linux";
       identity = import ./identity.nix;
@@ -52,6 +56,7 @@
             doInstallCheck = false;
             installCheckPhase = "true";
           });
+          whisperDictationPkg = whisper-dictation.packages.${system}.default;
         };
         modules = [
           ({ pkgs, ... }: {
@@ -66,6 +71,9 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = {
+              whisperDictationPkg = whisper-dictation.packages.${system}.default;
+            };
             home-manager.users.${identity.userName} = import ./home.nix { inherit nvchad-starter monitorsConfig workspacesConfig; };
           }
         ];

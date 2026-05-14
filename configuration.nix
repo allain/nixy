@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, winpodxPkg, ... }:
+{ config, lib, pkgs, self, winpodxPkg, whisperDictationPkg, ... }:
 let
   identity = import ./identity.nix;
 in
@@ -155,7 +155,13 @@ in
     libqalculate
     zigpkgs."0.16.0"
     winpodxPkg
+    whisperDictationPkg
   ];
+
+  programs.ydotool.enable = true;
+  # Socket is owned by this group; using "input" (which our user is already
+  # in) avoids a logout/login after enabling.
+  programs.ydotool.group = "input";
 
   programs.neovim = {
     enable = true;

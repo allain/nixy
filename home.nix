@@ -1,5 +1,5 @@
 { nvchad-starter, monitorsConfig, workspacesConfig }:
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, whisperDictationPkg, ... }:
 {
   home.stateVersion = "25.11";
 
@@ -161,6 +161,41 @@ EOF
       RestartSec = 2;
     };
     Install.WantedBy = [ "graphical-session.target" ];
+  };
+
+  # Lazy-start: no Install.WantedBy. First Super+Period press triggers
+  # `systemctl --user start --no-block whisper-dictation` (see hyprland.conf.tpl);
+  # the daemon then captures subsequent press/release via evdev directly.
+  systemd.user.services.whisper-dictation = {
+    Unit = {
+      Description = "Whisper Dictation - local speech-to-text daemon";
+      Documentation = [ "https://github.com/jacopone/whisper-dictation" ];
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${whisperDictationPkg}/bin/whisper-dictation";
+      Restart = "on-failure";
+      RestartSec = 5;
+      # Upstream wrapper only sets GI_TYPELIB_PATH for gtk4 + gobject-introspection,
+      # missing the rest of GTK4's transitive typelib deps (Graphene, PangoCairo, etc.).
+      # Prepend the full GTK4 set here; the wrapper's --prefix then adds gtk4+gi on top.
+      # YDOTOOL_SOCKET is needed because the user systemd manager doesn't inherit
+      # environment.variables from /etc/profile.
+      Environment = [
+        "PYTHONUNBUFFERED=1"
+        "YDOTOOL_SOCKET=/run/ydotoold/socket"
+        "GI_TYPELIB_PATH=${lib.makeSearchPath "lib/girepository-1.0" [
+          pkgs.graphene
+          pkgs.pango.out
+          pkgs.gdk-pixbuf
+          pkgs.harfbuzz
+          pkgs.glib.out
+          pkgs.gtk4
+          pkgs.gobject-introspection
+        ]}"
+      ];
+    };
   };
 
   home.activation.renderTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
