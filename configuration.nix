@@ -139,6 +139,7 @@ in
     slurp
     awww
     walker
+    elephant
     hyprlock
     hypridle
     hyprpolkitagent

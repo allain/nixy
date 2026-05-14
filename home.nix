@@ -125,6 +125,24 @@ EOF
     Install.WantedBy = [ "timers.target" ];
   };
 
+  # Walker 2.x split its data layer into a separate `elephant` backend daemon.
+  # Without elephant running, walker exits immediately with
+  # "Please install elephant" and Super+Space silently does nothing.
+  systemd.user.services.elephant = {
+    Unit = {
+      Description = "Elephant data provider (walker backend)";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.elephant}/bin/elephant";
+      Restart = "on-failure";
+      RestartSec = 2;
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+
   # Walker launcher daemon. Managed by systemd so it auto-restarts if it
   # crashes (previously relied on `exec-once` which only fires once per
   # Hyprland session — if walker died mid-session, Super+Space stopped
@@ -133,7 +151,8 @@ EOF
     Unit = {
       Description = "Walker application launcher (GApplication service)";
       PartOf = [ "graphical-session.target" ];
-      After = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" "elephant.service" ];
+      Requires = [ "elephant.service" ];
     };
     Service = {
       Type = "simple";
