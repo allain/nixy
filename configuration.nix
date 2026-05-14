@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, ... }:
+{ config, lib, pkgs, self, winpodxPkg, ... }:
 let
   identity = import ./identity.nix;
 in
@@ -79,10 +79,18 @@ in
     ];
   };
 
+  xdg.mime.defaultApplications = {
+    "text/html" = "vivaldi-stable.desktop";
+    "x-scheme-handler/http" = "vivaldi-stable.desktop";
+    "x-scheme-handler/https" = "vivaldi-stable.desktop";
+    "x-scheme-handler/about" = "vivaldi-stable.desktop";
+    "x-scheme-handler/unknown" = "vivaldi-stable.desktop";
+  };
+
   environment.sessionVariables = {
     EDITOR = "nvim";
     TERMINAL = "foot";
-    BROWSER = "google-chrome-stable";
+    BROWSER = "vivaldi";
     NIXOS_OZONE_WL = "1";
     PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
     C_INCLUDE_PATH = "${pkgs.openssl.dev}/include:${pkgs.glibc.dev}/include";
@@ -96,7 +104,6 @@ in
     claude-code
     deno
     fd
-    google-chrome
     foot
     gettext
     glow
@@ -147,6 +154,7 @@ in
     hyprsunset
     libqalculate
     zigpkgs."0.16.0"
+    winpodxPkg
   ];
 
   programs.neovim = {

@@ -15,9 +15,13 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    winpodx = {
+      url = "github:kernalix7/winpodx";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-waybar, zig-overlay, nvchad-starter, home-manager, ... }:
+  outputs = { self, nixpkgs, nixpkgs-waybar, zig-overlay, nvchad-starter, home-manager, winpodx, ... }:
     let
       system = "x86_64-linux";
       identity = import ./identity.nix;
@@ -43,6 +47,11 @@
         inherit system;
         specialArgs = {
           inherit self nvchad-starter monitorsConfig workspacesConfig;
+          winpodxPkg = winpodx.packages.${system}.default.overrideAttrs (old: {
+            doCheck = false;
+            doInstallCheck = false;
+            installCheckPhase = "true";
+          });
         };
         modules = [
           ({ pkgs, ... }: {

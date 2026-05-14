@@ -4,7 +4,7 @@ pad=12x8
 selection-target=clipboard
 
 [url]
-launch=google-chrome-stable ${url}
+launch=vivaldi ${url}
 
 [key-bindings]
 show-urls-launch=Control+Shift+o

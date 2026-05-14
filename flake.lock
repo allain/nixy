@@ -91,6 +91,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-waybar": "nixpkgs-waybar",
         "nvchad-starter": "nvchad-starter",
+        "winpodx": "winpodx",
         "zig-overlay": "zig-overlay"
       }
     },
@@ -107,6 +108,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "winpodx": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778763001,
+        "narHash": "sha256-owvm1xk0bBMAF4HOlCUd9GFtyGsRUrYoQp2VFn5hvSk=",
+        "owner": "kernalix7",
+        "repo": "winpodx",
+        "rev": "579dcd1576a2b11d5d87849c06b4df3afc14db43",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kernalix7",
+        "repo": "winpodx",
         "type": "github"
       }
     },

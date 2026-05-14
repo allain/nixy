@@ -99,7 +99,7 @@ bind = $mod, Return, exec, ~/.config/hypr/open-terminal.sh
 bind = $mod, Space, exec, walker
 bind = $mod, P, exec, ~/.config/hypr/walker-bitwarden.sh
 bind = $mod, B, exec, vivaldi
-bind = $mod, G, exec, google-chrome-stable --app=https://gemini.google.com
+bind = $mod, G, exec, vivaldi --app=https://gemini.google.com
 bind = $mod, M, exec, mattermost-desktop
 bind = $mod, E, exec, thunar
 bind = $mod, Escape, exec, pidof hyprlock || hyprlock
