@@ -106,6 +106,7 @@ in
     fd
     foot
     gettext
+    glab
     glow
     just
     jq
@@ -118,6 +119,7 @@ in
     mattermost-desktop
     neovim
     networkmanagerapplet
+    nomad
     strongswan
     xl2tpd
     nodejs_22
@@ -135,6 +137,7 @@ in
     vim
     waybar
     wget
+    wrk
     nwg-displays
     thunar
     wl-clipboard

@@ -35,6 +35,12 @@
     '';
   };
 
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableBashIntegration = true;
+  };
+
   home.file.".npmrc" = {
     text = "prefix=${config.home.homeDirectory}/.npm-global\n";
     force = true;
