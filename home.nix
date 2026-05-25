@@ -180,7 +180,7 @@ EOF
     };
     Service = {
       Type = "simple";
-      ExecStart = "${whisperDictationPkg}/bin/whisper-dictation";
+      ExecStart = "${whisperDictationPkg}/bin/whisper-dictation -v";
       Restart = "on-failure";
       RestartSec = 5;
       # Upstream wrapper only sets GI_TYPELIB_PATH for gtk4 + gobject-introspection,
