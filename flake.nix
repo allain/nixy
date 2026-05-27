@@ -23,9 +23,13 @@
       url = "github:jacopone/whisper-dictation";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-waybar, zig-overlay, nvchad-starter, home-manager, winpodx, whisper-dictation, ... }:
+  outputs = { self, nixpkgs, nixpkgs-waybar, zig-overlay, nvchad-starter, home-manager, winpodx, whisper-dictation, hermes-agent, ... }:
     let
       system = "x86_64-linux";
       identity = import ./identity.nix;
@@ -67,6 +71,7 @@
           })
           ./configuration.nix
           machineModule
+          hermes-agent.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

@@ -233,6 +233,15 @@ in
 
   services.openssh.enable = true;
 
+  services.hermes-agent = {
+    enable = true;
+    addToSystemPackages = true;
+    # No API keys configured yet — keep the gateway from crash-looping.
+    # Add environmentFiles (sops-nix / agenix) and flip this back to "always"
+    # once secrets are wired up.
+    restart = "no";
+  };
+
   zramSwap.enable = true;
 
 }
