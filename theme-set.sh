@@ -114,11 +114,13 @@ export ansi_brblack ansi_brred ansi_brgreen ansi_bryellow ansi_brblue ansi_brmag
 
 # Generate configs from templates
 mkdir -p "$HOME/.config/hypr" "$HOME/.config/waybar" "$HOME/.config/foot" \
+         "$HOME/.config/wezterm" \
          "$HOME/.config/mako" "$HOME/.config/walker/themes"
 
 envsubst "$VARS" < "$TEMPLATES_DIR/hyprland.conf.tpl"          > "$HOME/.config/hypr/hyprland.conf"
 envsubst "$VARS" < "$TEMPLATES_DIR/waybar-style.css.tpl"       > "$HOME/.config/waybar/style.css"
 envsubst "$VARS" < "$TEMPLATES_DIR/foot.ini.tpl"               > "$HOME/.config/foot/foot.ini"
+envsubst "$VARS" < "$TEMPLATES_DIR/wezterm.lua.tpl"            > "$HOME/.config/wezterm/wezterm.lua"
 envsubst "$VARS" < "$TEMPLATES_DIR/mako.conf.tpl"              > "$HOME/.config/mako/config"
 envsubst "$VARS" < "$TEMPLATES_DIR/hyprlock.conf.tpl"          > "$HOME/.config/hypr/hyprlock.conf"
 envsubst "$VARS" < "$TEMPLATES_DIR/walker-style.css.tpl"       > "$HOME/.config/walker/themes/catppuccin.css"

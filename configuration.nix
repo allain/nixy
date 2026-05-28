@@ -89,7 +89,7 @@ in
 
   environment.sessionVariables = {
     EDITOR = "nvim";
-    TERMINAL = "foot";
+    TERMINAL = "wezterm";
     BROWSER = "vivaldi";
     NIXOS_OZONE_WL = "1";
     PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
@@ -105,6 +105,7 @@ in
     deno
     fd
     foot
+    wezterm
     gettext
     glab
     glow
@@ -123,6 +124,7 @@ in
     strongswan
     xl2tpd
     nodejs_22
+    opencode
     openssl
     openssl.dev
     pkg-config
@@ -232,15 +234,6 @@ in
   '';
 
   services.openssh.enable = true;
-
-  services.hermes-agent = {
-    enable = true;
-    addToSystemPackages = true;
-    # No API keys configured yet — keep the gateway from crash-looping.
-    # Add environmentFiles (sops-nix / agenix) and flip this back to "always"
-    # once secrets are wired up.
-    restart = "no";
-  };
 
   zramSwap.enable = true;
 

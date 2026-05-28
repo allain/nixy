@@ -276,6 +276,7 @@ EOF
     "nixy/templates/hyprland.conf.tpl".source = ./templates/hyprland.conf.tpl;
     "nixy/templates/waybar-style.css.tpl".source = ./templates/waybar-style.css.tpl;
     "nixy/templates/foot.ini.tpl".source = ./templates/foot.ini.tpl;
+    "nixy/templates/wezterm.lua.tpl".source = ./templates/wezterm.lua.tpl;
     "nixy/templates/mako.conf.tpl".source = ./templates/mako.conf.tpl;
     "nixy/templates/hyprlock.conf.tpl".source = ./templates/hyprlock.conf.tpl;
     "nixy/templates/walker-style.css.tpl".source = ./templates/walker-style.css.tpl;
