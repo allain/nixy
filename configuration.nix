@@ -107,6 +107,7 @@ in
     foot
     wezterm
     gettext
+    gimp
     glab
     glow
     just
