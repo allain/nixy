@@ -8,6 +8,14 @@
   boot.kernelParams = [
     "quiet"
     "loglevel=3"
+    "pcie_ports=compat"
+  ];
+
+  # The 00:1d.0 PCIe root port only leads to the Alpine Ridge Thunderbolt
+  # bridge. Keep it disabled unless Thunderbolt data/display support is needed;
+  # USB-C charging is handled by firmware/EC, not this driver.
+  boot.blacklistedKernelModules = [
+    "thunderbolt"
   ];
 
   # Hibernate support — Huawei Matebook specific

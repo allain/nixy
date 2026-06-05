@@ -70,6 +70,7 @@ in
   };
   programs.uwsm.enable = true;
   programs.dconf.enable = true;
+  programs.fish.enable = true;
 
   xdg.portal = {
     enable = true;
@@ -187,6 +188,7 @@ in
   users.users.${identity.userName} = {
     isNormalUser = true;
     description = identity.fullName;
+    shell = pkgs.fish;
     extraGroups = [
       "networkmanager"
       "wheel"
