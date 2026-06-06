@@ -93,9 +93,6 @@ in
     TERMINAL = "wezterm";
     BROWSER = "vivaldi";
     NIXOS_OZONE_WL = "1";
-    PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
-    C_INCLUDE_PATH = "${pkgs.openssl.dev}/include:${pkgs.glibc.dev}/include";
-    LIBRARY_PATH = "${pkgs.lib.getLib pkgs.openssl}/lib";
   };
 
   environment.systemPackages = with pkgs; [
@@ -103,13 +100,15 @@ in
     bubblewrap
     curl
     claude-code
-    deno
+    docker
+    docker-compose
     fd
     foot
     wezterm
     gettext
     gimp
     glab
+    git
     glow
     just
     jq
@@ -122,14 +121,9 @@ in
     mattermost-desktop
     neovim
     networkmanagerapplet
-    nomad
     strongswan
     xl2tpd
-    nodejs_22
     opencode
-    openssl
-    openssl.dev
-    pkg-config
     vivaldi
     pavucontrol
     playerctl
@@ -160,7 +154,6 @@ in
     cliphist
     hyprsunset
     libqalculate
-    zigpkgs."0.16.0"
     winpodxPkg
     whisperDictationPkg
   ];

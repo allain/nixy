@@ -5,7 +5,6 @@
 
   home.packages = with pkgs; [
     bibata-cursors
-    mermaid-cli
     nodejs_22
   ];
 

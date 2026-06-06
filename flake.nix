@@ -5,8 +5,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # Pin for waybar < 0.15 (0.15.0 invisible on Hyprland — Waybar #4864).
     nixpkgs-waybar.url = "github:NixOS/nixpkgs/nixos-25.05";
-    zig-overlay.url = "github:mitchellh/zig-overlay";
-    zig-overlay.inputs.nixpkgs.follows = "nixpkgs";
     nvchad-starter = {
       url = "github:NvChad/starter";
       flake = false;
@@ -25,7 +23,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-waybar, zig-overlay, nvchad-starter, home-manager, winpodx, whisper-dictation, ... }:
+  outputs = { self, nixpkgs, nixpkgs-waybar, nvchad-starter, home-manager, winpodx, whisper-dictation, ... }:
     let
       system = "x86_64-linux";
       identity = import ./identity.nix;
@@ -61,7 +59,6 @@
         modules = [
           ({ pkgs, ... }: {
             nixpkgs.overlays = [
-              zig-overlay.overlays.default
               (final: prev: { waybar = pkgsWaybar.waybar; })
             ];
           })
