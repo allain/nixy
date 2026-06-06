@@ -2,24 +2,34 @@
 set -euo pipefail
 
 WALLPAPER="$HOME/.local/share/wallpapers/current.jpg"
-CACHE="$HOME/.local/share/wallpapers/filelist.cache"
+CACHE="$HOME/.local/share/wallpapers/filelist-all-images.cache"
 REPO="dharmx/walls"
 BRANCH="main"
-
-# Categories to pick from (abstract/minimal)
-CATEGORIES="abstract|minimal|geometry|wave|paper|poly"
 
 mkdir -p "$(dirname "$WALLPAPER")"
 
 # Cache the file list for a day (avoids hitting the API every call)
-if [ ! -f "$CACHE" ] || [ "$(find "$CACHE" -mmin +1440 2>/dev/null)" ]; then
+if [ ! -s "$CACHE" ] || [ "$(find "$CACHE" -mmin +1440 2>/dev/null)" ]; then
   echo "Fetching file list from GitHub..."
-  curl -sf "https://api.github.com/repos/$REPO/git/trees/$BRANCH?recursive=1" \
+  TMP_CACHE="${CACHE}.$$"
+  trap 'rm -f "$TMP_CACHE"' EXIT
+
+  if ! curl -sf "https://api.github.com/repos/$REPO/git/trees/$BRANCH?recursive=1" \
     | grep '"path"' \
-    | grep -iE "($CATEGORIES)/" \
     | grep -iE '\.(jpg|jpeg|png|webp)"' \
     | sed 's/.*"path": "//;s/".*//' \
-    > "$CACHE"
+    > "$TMP_CACHE"; then
+    echo "Failed to fetch wallpaper file list."
+    exit 1
+  fi
+
+  if [ ! -s "$TMP_CACHE" ]; then
+    echo "No wallpapers found in fetched file list."
+    exit 1
+  fi
+
+  mv "$TMP_CACHE" "$CACHE"
+  trap - EXIT
 fi
 
 TOTAL=$(wc -l < "$CACHE")

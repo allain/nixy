@@ -11,9 +11,10 @@ border-size=2
 border-radius=10
 padding=14
 margin=10
-default-timeout=4000
+default-timeout=5000
+ignore-timeout=1
 icon-path=/usr/share/icons/hicolor
 
 [urgency=high]
 border-color=#${red}ff
-default-timeout=8000
+default-timeout=5000
