@@ -6,7 +6,23 @@ CACHE="$HOME/.local/share/wallpapers/filelist-all-images.cache"
 REPO="dharmx/walls"
 BRANCH="main"
 
+FORCE=0
+if [ "${1:-}" = "--force" ] || [ "${1:-}" = "-f" ]; then
+  FORCE=1
+fi
+
 mkdir -p "$(dirname "$WALLPAPER")"
+
+# Skip download if a wallpaper is already present and not explicitly forced.
+# Daily timer / login still applies the existing image; Super+Shift+S forces a new one.
+if [ "$FORCE" -eq 0 ] && [ -s "$WALLPAPER" ]; then
+  echo "Wallpaper already downloaded; re-applying."
+  awww img "$WALLPAPER" \
+    --transition-type grow \
+    --transition-duration 2 \
+    --transition-fps 60
+  exit 0
+fi
 
 # Cache the file list for a day (avoids hitting the API every call)
 if [ ! -s "$CACHE" ] || [ "$(find "$CACHE" -mmin +1440 2>/dev/null)" ]; then

@@ -121,6 +121,7 @@ in
     mattermost-desktop
     neovim
     networkmanagerapplet
+    wgnord
     strongswan
     xl2tpd
     opencode
